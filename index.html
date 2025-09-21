@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Synthex6</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter for a clean, professional feel -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for social media icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <!-- Three.js CDN for the 3D background -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d0d0d;
+            color: #f5f5f5;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+
+        /* Full-screen 3D canvas */
+        #three-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .section-background {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .cta-button {
+            background-image: linear-gradient(135deg, #a88b59, #b8954d);
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(184, 149, 77, 0.3);
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0d0d0d;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #a88b59;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #b8954d;
+        }
+        
+        /* Hide the scrollbar for the portfolio section */
+        #portfolio-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        #portfolio-container {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+    </style>
+</head>
+
+<body class="bg-[#0d0d0d] text-[#f5f5f5]">
+
+    <!-- 3D Canvas -->
+    <canvas id="three-canvas"></canvas>
+
+    <!-- Navigation Bar -->
+    <nav class="fixed top-0 left-0 w-full z-50 bg-[#0d0d0d] bg-opacity-80 backdrop-blur-md shadow-lg p-4 transition-all duration-300">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="#home" class="text-2xl font-bold transition duration-300">
+                <span class="text-[#b8954d]">SYNTH</span><span class="text-[#bbbbbb]">E</span><span class="text-[#b8954d]">X6</span>
+            </a>
+            <div class="flex space-x-6">
+                <a href="#about" class="text-sm md:text-base hover:text-[#b8954d] transition duration-300">About</a>
+                <a href="#services" class="text-sm md:text-base hover:text-[#b8954d] transition duration-300">Services</a>
+                <a href="#portfolio" class="text-sm md:text-base hover:text-[#b8954d] transition duration-300">Portfolio</a>
+                <a href="#contact" class="text-sm md:text-base hover:text-[#b8954d] transition duration-300">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="relative z-10">
+        <!-- Hero Section -->
+        <section id="home" class="flex flex-col items-center justify-center min-h-screen text-center p-8">
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold leading-tight text-white drop-shadow-lg">
+                The Future of Digital Excellence
+            </h1>
+            <p class="mt-4 text-xl md:text-2xl lg:text-3xl font-light max-w-4xl text-[#bbbbbb]">
+                Crafting immersive digital solutions with cutting-edge technology and human-centric design.
+            </p>
+            <a href="#contact" class="mt-12 px-8 py-4 text-white font-bold rounded-full cta-button">
+                Get in Touch
+            </a>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="py-20 px-4 md:px-8">
+            <div class="container mx-auto max-w-4xl text-center section-background rounded-2xl p-10 md:p-16 shadow-2xl">
+                <h2 class="text-4xl md:text-5xl font-bold text-white mb-8">Who We Are</h2>
+                <p class="text-lg md:text-xl leading-relaxed text-[#bbbbbb]">
+                    Synthex6 is a dedicated team of postgraduates and creatives who solve complex academic and technical challenges. We specialize in developing robust hardware and IoT solutions, creating professional documentation, and producing high-quality multimedia content. We pride ourselves on flexible, quick, and budget-friendly services that help you succeed.
+                </p>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="py-20 px-4 md:px-8">
+            <div class="container mx-auto text-center">
+                <h2 class="text-4xl md:text-5xl font-bold text-white mb-16">Our Services</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                    <!-- Service Card 1 -->
+                    <div class="section-background rounded-2xl p-8 shadow-2xl transition-all duration-300 hover:scale-105 hover:border-[#b8954d]">
+                        <div class="text-5xl mb-4 text-[#b8954d]">💡</div>
+                        <h3 class="text-xl md:text-2xl font-bold mb-2 text-white">Strategic Consulting</h3>
+                        <p class="text-sm text-[#bbbbbb]">Navigating the digital landscape requires a clear vision. We provide expert guidance to define your goals and plot your path to success.</p>
+                    </div>
+                    <!-- Service Card 2 -->
+                    <div class="section-background rounded-2xl p-8 shadow-2xl transition-all duration-300 hover:scale-105 hover:border-[#b8954d]">
+                        <div class="text-5xl mb-4 text-[#b8954d]">💻</div>
+                        <h3 class="text-xl md:text-2xl font-bold mb-2 text-white">Full-Stack Development</h3>
+                        <p class="text-sm text-[#bbbbbb]">From front-end aesthetics to back-end logic, our team builds robust and scalable applications from the ground up.</p>
+                    </div>
+                    <!-- Service Card 3 -->
+                    <div class="section-background rounded-2xl p-8 shadow-2xl transition-all duration-300 hover:scale-105 hover:border-[#b8954d]">
+                        <div class="text-5xl mb-4 text-[#b8954d]">🎨</div>
+                        <h3 class="text-xl md:text-2xl font-bold mb-2 text-white">Immersive UI/UX Design</h3>
+                        <p class="text-sm text-[#bbbbbb]">We design interfaces that are not just beautiful, but also intuitive and engaging, creating truly memorable user experiences.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Portfolio Section -->
+        <section id="portfolio" class="py-20 px-4 md:px-8">
+            <div class="container mx-auto text-center">
+                <h2 class="text-4xl md:text-5xl font-bold text-white mb-16">Our Portfolio</h2>
+                <!-- New Flexbox container for horizontal scrolling -->
+                <div id="portfolio-container" class="flex overflow-x-auto gap-10 pb-4">
+                    <!-- Portfolio Item 1 -->
+                    <div class="section-background rounded-2xl overflow-hidden shadow-2xl transition-all duration-300 hover:scale-[1.02] flex-shrink-0 w-80">
+                        <img src="WhatsApp Image 2025-09-21 at 22.59.57_3ebb354b.jpg" alt="Project Atlas" class="w-full h-auto object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-white mb-2">Project Hygiene</h3>
+                            <p class="text-[#bbbbbb]">Healthcare monitoring and medicine dispensing unit.</p>
+                        </div>
+                    </div>
+                    <!-- Portfolio Item 2 -->
+                    <div class="section-background rounded-2xl overflow-hidden shadow-2xl transition-all duration-300 hover:scale-[1.02] flex-shrink-0 w-80">
+                        <img src="WhatsApp Image 2025-09-21 at 23.03.22_c780c4af.jpg" alt="Project Evolve" class="w-full h-auto object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-white mb-2">Project Tusker</h3>
+                            <p class="text-[#bbbbbb]">AN automated warehouse management system.</p>
+                        </div>
+                    </div>
+                    <!-- Portfolio Item 3 -->
+                    <div class="section-background rounded-2xl overflow-hidden shadow-2xl transition-all duration-300 hover:scale-[1.02] flex-shrink-0 w-80">
+                        <video autoplay muted loop playsinline style="width:100%; height:auto; object-fit:cover;">
+                            <source src="WhatsApp Video 2025-09-21 at 23.11.46_501e2eea.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                         <div class="p-6">
+                            <h3 class="text-xl font-bold text-white mb-2">Assignment</h3>
+                            <p class="text-[#bbbbbb]">Full-Stack web Development</p>
+                        </div>
+                    </div>
+                    <!-- Portfolio Item 4 -->
+                    <div class="section-background rounded-2xl overflow-hidden shadow-2xl transition-all duration-300 hover:scale-[1.02] flex-shrink-0 w-80">
+                        <img src="WhatsApp Image 2025-09-21 at 22.58.52_0cb6626e.jpg" alt="Project Chronos" class="w-full h-auto object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-white mb-2">Project Vortex</h3>
+                            <p class="text-[#bbbbbb]"> Automated Train (auto braking system,camera system,Echo system with solar panels)</p>
+                        </div>
+                    </div>
+                    <!-- Portfolio Item 5 -->
+                    <div class="section-background rounded-2xl overflow-hidden shadow-2xl transition-all duration-300 hover:scale-[1.02] flex-shrink-0 w-80">
+                        <img src="WhatsApp Image 2025-09-21 at 23.11.47_a8b84b60.jpg" alt="Project Aether" class="w-full h-auto object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-white mb-2">Assignment</h3>
+                            <p class="text-[#bbbbbb]">related in database management system.</p>
+                        </div>
+                    </div>
+                    <!-- Portfolio Item 6 -->
+                    <div class="section-background rounded-2xl overflow-hidden shadow-2xl transition-all duration-300 hover:scale-[1.02] flex-shrink-0 w-80">
+                        <img src="WhatsApp Image 2025-09-21 at 23.01.20_8dc17c95.jpg" alt="Project WSR" class="w-full h-auto object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-white mb-2">Project WSR</h3>
+                            <p class="text-[#bbbbbb]">automated waste sorting robot.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-20 px-4 md:px-8">
+            <div class="container mx-auto max-w-2xl text-center section-background rounded-2xl p-10 md:p-16 shadow-2xl">
+                <h2 class="text-4xl md:text-5xl font-bold mb-8 text-white">Let's Connect</h2>
+                <p class="text-[#bbbbbb] mb-8">
+                    Ready to build something extraordinary? Send us a message and we'll get back to you promptly.
+                </p>
+                <div class="space-y-4 mb-8 text-lg text-[#f5f5f5]">
+                    <p class="flex items-center justify-center">
+                        <i class="fa-solid fa-envelope mr-3 text-[#b8954d]"></i>
+                        <a href="mailto:synthex6official@gmail.com" class="hover:text-[#b8954d] transition-colors duration-300">synthex6official@gmail.com</a>
+                    </p>
+                    <p class="flex items-center justify-center">
+                        <i class="fa-solid fa-phone mr-3 text-[#b8954d]"></i>
+                        <a href="tel:+94706575477" class="hover:text-[#b8954d] transition-colors duration-300">+94 70 657 5477</a>
+                    </p>
+                    <div class="flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-6">
+                        <a href="https://www.facebook.com/profile.php?id=61581334524183" target="_blank" class="text-[#bbbbbb] hover:text-white transition-colors duration-300 flex items-center justify-center">
+                            <i class="fab fa-facebook-f text-2xl mr-2"></i>
+                            <span>Synthex6</span>
+                        </a>
+                        <a href="https://www.instagram.com/synthex_6?igsh=NHN1amgxZmhwaWxt" target="_blank" class="text-[#bbbbbb] hover:text-white transition-colors duration-300 flex items-center justify-center">
+                            <i class="fab fa-instagram text-2xl mr-2"></i>
+                            <span>synthex_6</span>
+                        </a>
+                    </div>
+                </div>
+                <form id="contactForm" class="space-y-6">
+                    <input type="text" id="name" name="name" placeholder="Your Name" required class="w-full px-6 py-4 rounded-lg bg-[#1a1a1a] text-white border border-gray-700 focus:ring-2 focus:ring-[#b8954d] outline-none placeholder-gray-500">
+                    <input type="email" id="email" name="email" placeholder="Your Email" required class="w-full px-6 py-4 rounded-lg bg-[#1a1a1a] text-white border border-gray-700 focus:ring-2 focus:ring-[#b8954d] outline-none placeholder-gray-500">
+                    <textarea id="message" name="message" rows="5" placeholder="Your Message" required class="w-full px-6 py-4 rounded-lg bg-[#1a1a1a] text-white border border-gray-700 focus:ring-2 focus:ring-[#b8954d] outline-none placeholder-gray-500"></textarea>
+                    <button type="submit" class="w-full px-8 py-4 text-white font-bold rounded-full cta-button">
+                        Send Message
+                    </button>
+                    <div id="statusMessage" class="mt-4 text-center text-green-500" style="display: none;"></div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-10 px-4 text-center border-t border-gray-800">
+        <div class="container mx-auto text-gray-500">
+            <p>&copy; 2024 Synthex6. All Rights Reserved.</p>
+            <p class="mt-2">Focus on your goals💡 We handle the weight 🏆 Hustle hard, here's the support🚀</p>
+        </div>
+    </footer>
+
+    <script>
+        // Use a simple, modern approach for interactivity
+        document.addEventListener('DOMContentLoaded', () => {
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+
+            // Form submission handling
+            const contactForm = document.getElementById('contactForm');
+            const statusMessage = document.getElementById('statusMessage');
+
+            contactForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                statusMessage.textContent = 'Submitting...';
+                statusMessage.style.display = 'block';
+                statusMessage.style.color = '#b8954d';
+                await new Promise(resolve => setTimeout(resolve, 1500));
+                contactForm.reset();
+                statusMessage.textContent = 'Message sent successfully! We will get back to you soon.';
+                statusMessage.style.color = '#b8954d';
+            });
+        });
+
+        // THREE.js setup for floating particles and the explosion effect
+        window.onload = function () {
+            // Scene setup
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 10;
+
+            const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('three-canvas'), antialias: true, alpha: true });
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.setSize(window.innerWidth, window.innerHeight);
+
+            // Create particle system
+            const particleCount = 2000;
+            const initialRadius = 4;
+            const geometry = new THREE.BufferGeometry();
+            const positions = new Float32Array(particleCount * 3);
+            const velocities = new Float32Array(particleCount * 3);
+
+            for (let i = 0; i < particleCount; i++) {
+                const phi = Math.acos((2 * Math.random()) - 1);
+                const theta = Math.random() * 2 * Math.PI;
+                positions[i * 3] = initialRadius * Math.sin(phi) * Math.cos(theta);
+                positions[i * 3 + 1] = initialRadius * Math.sin(phi) * Math.sin(theta);
+                positions[i * 3 + 2] = initialRadius * Math.cos(phi);
+
+                velocities[i * 3] = 0;
+                velocities[i * 3 + 1] = 0;
+                velocities[i * 3 + 2] = 0;
+            }
+
+            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+            const material = new THREE.PointsMaterial({
+                color: 0xb8954d,
+                size: 0.1,
+                blending: THREE.AdditiveBlending,
+                transparent: true,
+                opacity: 0.8
+            });
+
+            const particles = new THREE.Points(geometry, material);
+            scene.add(particles);
+
+            let hasExploded = false;
+
+            // Handle scroll event for the explosion
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50 && !hasExploded) {
+                    hasExploded = true;
+                    // Trigger the explosion effect
+                    for (let i = 0; i < particleCount; i++) {
+                        // Give each particle a random velocity vector pointing away from the center
+                        const direction = new THREE.Vector3(positions[i * 3], positions[i * 3 + 1], positions[i * 3 + 2]).normalize();
+                        const speed = Math.random() * 0.1 + 0.05;
+                        velocities[i * 3] = direction.x * speed;
+                        velocities[i * 3 + 1] = direction.y * speed;
+                        velocities[i * 3 + 2] = direction.z * speed;
+                    }
+                }
+            });
+
+            // Animation loop
+            const animate = function () {
+                requestAnimationFrame(animate);
+
+                // Update particle positions based on velocity
+                if (hasExploded) {
+                    const positions = particles.geometry.attributes.position.array;
+                    for (let i = 0; i < particleCount; i++) {
+                        positions[i * 3] += velocities[i * 3];
+                        positions[i * 3 + 1] += velocities[i * 3 + 1];
+                        positions[i * 3 + 2] += velocities[i * 3 + 2];
+                    }
+                    particles.geometry.attributes.position.needsUpdate = true;
+                } else {
+                    // Pre-explosion animation (subtle rotation)
+                    particles.rotation.x += 0.0005;
+                    particles.rotation.y += 0.0008;
+                }
+
+                renderer.render(scene, camera);
+            };
+
+            // Handle window resizing
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+
+            // Mouse movement effect on camera
+            document.addEventListener('mousemove', (e) => {
+                const mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+                const mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+                
+                // Smoothly adjust camera position
+                camera.position.x += (mouseX * 2 - camera.position.x) * 0.05;
+                camera.position.y += (mouseY * 2 - camera.position.y) * 0.05;
+                camera.lookAt(scene.position);
+            });
+
+            animate();
+        };
+
+        // Automatic horizontal scrolling for portfolio
+        document.addEventListener('DOMContentLoaded', () => {
+            const portfolioContainer = document.getElementById('portfolio-container');
+            const scrollInterval = 3000; // 3 seconds
+
+            if (portfolioContainer) {
+                // Duplicate the portfolio items to create a seamless loop
+                const originalItems = Array.from(portfolioContainer.children);
+                originalItems.forEach(item => {
+                    portfolioContainer.appendChild(item.cloneNode(true));
+                });
+                
+                let currentScroll = 0;
+                let itemWidth = 0;
+
+                const autoScroll = () => {
+                    const firstItem = portfolioContainer.firstElementChild;
+                    if (!firstItem) return;
+
+                    // Calculate item width including gap
+                    if (itemWidth === 0) {
+                        const gap = parseInt(getComputedStyle(portfolioContainer).gap);
+                        itemWidth = firstItem.offsetWidth + gap;
+                    }
+
+                    currentScroll += itemWidth;
+
+                    // If we've scrolled past the original content, reset instantly
+                    if (currentScroll >= portfolioContainer.scrollWidth / 2) {
+                        portfolioContainer.scrollTo({
+                            left: 0,
+                            behavior: 'instant'
+                        });
+                        currentScroll = itemWidth; // Start the next scroll from the first item
+                    } else {
+                        portfolioContainer.scrollTo({
+                            left: currentScroll,
+                            behavior: 'smooth'
+                        });
+                    }
+                };
+                
+                setInterval(autoScroll, scrollInterval);
+            }
+        });
+    </script>
+</body>
+
+</html>
