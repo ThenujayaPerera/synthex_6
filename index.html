@@ -18,9 +18,42 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #0d0d0d;
-            color: #f5f5f5;
-            overflow-x: hidden; /* Prevent horizontal scroll */
+            background-color: #0a0a0a;
+            color: #e5e5e5;
+            overflow-x: hidden;
+            /* Prevent horizontal scroll */
+        }
+
+        /* Loading screen container */
+        #loader-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #0a0a0a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            opacity: 1;
+            transition: opacity 1s ease-in-out;
+        }
+
+        /* Loading screen hidden state */
+        #loader-container.loader-hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Main content container initially hidden */
+        #main-content {
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+        }
+
+        #main-content.visible {
+            opacity: 1;
         }
 
         /* Full-screen 3D canvas */
@@ -31,13 +64,18 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-            transition: opacity 1s ease-in-out;
         }
 
         .section-background {
             background: rgba(0, 0, 0, 0.7);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: inset 0 0 10px rgba(184, 149, 77, 0.05);
+            transition: all 0.5s ease-in-out;
+        }
+
+        .section-background:hover {
+            box-shadow: inset 0 0 15px rgba(184, 149, 77, 0.1), 0 0 20px rgba(184, 149, 77, 0.1);
         }
 
         .cta-button {
@@ -47,7 +85,7 @@
 
         .cta-button:hover {
             transform: translateY(-4px);
-            box-shadow: 0 8px 20px rgba(184, 149, 77, 0.3);
+            box-shadow: 0 8px 20px rgba(184, 149, 77, 0.3), 0 0 25px rgba(184, 149, 77, 0.5);
         }
 
         /* Custom scrollbar */
@@ -56,7 +94,7 @@
         }
 
         ::-webkit-scrollbar-track {
-            background: #0d0d0d;
+            background: #0a0a0a;
         }
 
         ::-webkit-scrollbar-thumb {
@@ -67,205 +105,228 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #b8954d;
         }
-        
+
         /* Hide the scrollbar for the portfolio section */
         #portfolio-container::-webkit-scrollbar {
             display: none;
         }
 
         #portfolio-container {
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;  /* Firefox */
+            -ms-overflow-style: none;
+            /* IE and Edge */
+            scrollbar-width: none;
+            /* Firefox */
+        }
+
+        /* Custom hover effect for nav links */
+        .nav-link {
+            transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, transform 0.3s ease-in-out;
+        }
+
+        .nav-link:hover {
+            transform: scale(1.1);
+            background-color: #ffffff;
+            color: #0a0a0a;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
     </style>
 </head>
 
-<body class="bg-[#0d0d0d] text-[#f5f5f5]">
+<body class="bg-[#0a0a0a] text-[#e5e5e5]">
+
+    <!-- Loading Screen -->
+    <div id="loader-container">
+        <div class="text-6xl font-bold animate-pulse">
+            <span class="text-[#b8954d]">SYNTH</span><span class="text-[#e5e5e5]">E</span><span class="text-[#b8954d]">X6</span>
+        </div>
+    </div>
 
     <!-- 3D Canvas -->
     <canvas id="three-canvas"></canvas>
 
-    <!-- Navigation Bar -->
-    <nav class="fixed top-0 left-0 w-full z-50 bg-[#0d0d0d] bg-opacity-80 backdrop-blur-md shadow-lg p-4 transition-all duration-300">
-        <div class="container mx-auto flex justify-between items-center">
-            <a href="#home" class="text-2xl font-bold transition duration-300">
-                <span class="text-[#b8954d]">SYNTH</span><span class="text-[#bbbbbb]">E</span><span class="text-[#b8954d]">X6</span>
-            </a>
-            <div class="flex space-x-6">
-                <a href="#about" class="text-sm md:text-base hover:text-[#b8954d] transition duration-300">About</a>
-                <a href="#services" class="text-sm md:text-base hover:text-[#b8954d] transition duration-300">Services</a>
-                <a href="#portfolio" class="text-sm md:text-base hover:text-[#b8954d] transition duration-300">Portfolio</a>
-                <a href="#contact" class="text-sm md:text-base hover:text-[#b8954d] transition duration-300">Contact</a>
+    <!-- Main Content -->
+    <div id="main-content">
+        <!-- Navigation Bar -->
+        <nav class="fixed top-0 left-0 w-full z-50 bg-[#0a0a0a] shadow-lg p-4 transition-all duration-300">
+            <div class="container mx-auto flex justify-between items-center">
+                <a href="#home" class="transition duration-300">
+                    <div class="text-xl md:text-2xl font-bold">
+                        <span class="text-[#b8954d]">SYNTH</span><span class="text-[#e5e5e5]">E</span><span class="text-[#b8954d]">X6</span>
+                    </div>
+                </a>
+                <div class="flex items-center space-x-2 md:space-x-4 rounded-full p-1">
+                    <a href="#about" class="nav-link px-3 py-1 md:px-4 md:py-2 rounded-full text-sm md:text-base text-white">About</a>
+                    <a href="#services" class="nav-link px-3 py-1 md:px-4 md:py-2 rounded-full text-sm md:text-base text-white">Services</a>
+                    <a href="#portfolio" class="nav-link px-3 py-1 md:px-4 md:py-2 rounded-full text-sm md:text-base text-white">Portfolio</a>
+                    <a href="#contact" class="nav-link px-3 py-1 md:px-4 md:py-2 rounded-full text-sm md:text-base text-white">Contact</a>
+                </div>
             </div>
-        </div>
-    </nav>
+        </nav>
 
-    <main class="relative z-10">
-        <!-- Hero Section -->
-        <section id="home" class="flex flex-col items-center justify-center min-h-screen text-center p-8">
-            <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold leading-tight text-white drop-shadow-lg">
-                The Future of Digital Excellence
-            </h1>
-            <p class="mt-4 text-xl md:text-2xl lg:text-3xl font-light max-w-4xl text-[#bbbbbb]">
-                Crafting immersive digital solutions with cutting-edge technology and human-centric design.
-            </p>
-            <a href="#contact" class="mt-12 px-8 py-4 text-white font-bold rounded-full cta-button">
-                Get in Touch
-            </a>
-        </section>
-
-        <!-- About Section -->
-        <section id="about" class="py-20 px-4 md:px-8">
-            <div class="container mx-auto max-w-4xl text-center section-background rounded-2xl p-10 md:p-16 shadow-2xl">
-                <h2 class="text-4xl md:text-5xl font-bold text-white mb-8">Who We Are</h2>
-                <p class="text-lg md:text-xl leading-relaxed text-[#bbbbbb]">
-                    Synthex6 is a dedicated team of postgraduates and creatives who solve complex academic and technical challenges. We specialize in developing robust hardware and IoT solutions, creating professional documentation, and producing high-quality multimedia content. We pride ourselves on flexible, quick, and budget-friendly services that help you succeed.
+        <main class="relative z-10">
+            <!-- Hero Section -->
+            <section id="home" class="flex flex-col items-center justify-center min-h-screen text-center p-8">
+                <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold leading-tight text-white drop-shadow-md">
+                    The Future of Digital Excellence
+                </h1>
+                <p class="mt-4 text-xl md:text-2xl lg:text-3xl font-light max-w-4xl text-[#bbbbbb]">
+                    Crafting immersive digital solutions with cutting-edge technology and human-centric design.
                 </p>
-            </div>
-        </section>
+                <a href="#contact" class="mt-12 px-8 py-4 text-white font-bold rounded-full cta-button">
+                    Get in Touch
+                </a>
+            </section>
 
-        <!-- Services Section -->
-        <section id="services" class="py-20 px-4 md:px-8">
-            <div class="container mx-auto text-center">
-                <h2 class="text-4xl md:text-5xl font-bold text-white mb-16">Our Services</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                    <!-- Service Card 1 -->
-                    <div class="section-background rounded-2xl p-8 shadow-2xl transition-all duration-300 hover:scale-105 hover:border-[#b8954d]">
-                        <div class="text-5xl mb-4 text-[#b8954d]">💡</div>
-                        <h3 class="text-xl md:text-2xl font-bold mb-2 text-white">Strategic Consulting</h3>
-                        <p class="text-sm text-[#bbbbbb]">Navigating the digital landscape requires a clear vision. We provide expert guidance to define your goals and plot your path to success.</p>
-                    </div>
-                    <!-- Service Card 2 -->
-                    <div class="section-background rounded-2xl p-8 shadow-2xl transition-all duration-300 hover:scale-105 hover:border-[#b8954d]">
-                        <div class="text-5xl mb-4 text-[#b8954d]">💻</div>
-                        <h3 class="text-xl md:text-2xl font-bold mb-2 text-white">Full-Stack Development</h3>
-                        <p class="text-sm text-[#bbbbbb]">From front-end aesthetics to back-end logic, our team builds robust and scalable applications from the ground up.</p>
-                    </div>
-                    <!-- Service Card 3 -->
-                    <div class="section-background rounded-2xl p-8 shadow-2xl transition-all duration-300 hover:scale-105 hover:border-[#b8954d]">
-                        <div class="text-5xl mb-4 text-[#b8954d]">🎨</div>
-                        <h3 class="text-xl md:text-2xl font-bold mb-2 text-white">Immersive UI/UX Design</h3>
-                        <p class="text-sm text-[#bbbbbb]">We design interfaces that are not just beautiful, but also intuitive and engaging, creating truly memorable user experiences.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Portfolio Section -->
-        <section id="portfolio" class="py-20 px-4 md:px-8">
-            <div class="container mx-auto text-center">
-                <h2 class="text-4xl md:text-5xl font-bold text-white mb-16">Our Portfolio</h2>
-                <!-- New Flexbox container for horizontal scrolling -->
-                <div id="portfolio-container" class="flex overflow-x-auto gap-10 pb-4">
-                    <!-- Portfolio Item 1 -->
-                    <div class="section-background rounded-2xl overflow-hidden shadow-2xl transition-all duration-300 hover:scale-[1.02] flex-shrink-0 w-80">
-                        <img src="WhatsApp Image 2025-09-21 at 22.59.57_3ebb354b.jpg" alt="Project Atlas" class="w-full h-auto object-cover">
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold text-white mb-2">Project Hygiene</h3>
-                            <p class="text-[#bbbbbb]">Healthcare monitoring and medicine dispensing unit.</p>
-                        </div>
-                    </div>
-                    <!-- Portfolio Item 2 -->
-                    <div class="section-background rounded-2xl overflow-hidden shadow-2xl transition-all duration-300 hover:scale-[1.02] flex-shrink-0 w-80">
-                        <img src="WhatsApp Image 2025-09-21 at 23.03.22_c780c4af.jpg" alt="Project Evolve" class="w-full h-auto object-cover">
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold text-white mb-2">Project Tusker</h3>
-                            <p class="text-[#bbbbbb]">AN automated warehouse management system.</p>
-                        </div>
-                    </div>
-                    <!-- Portfolio Item 3 -->
-                    <div class="section-background rounded-2xl overflow-hidden shadow-2xl transition-all duration-300 hover:scale-[1.02] flex-shrink-0 w-80">
-                        <video autoplay muted loop playsinline style="width:100%; height:auto; object-fit:cover;">
-                            <source src="WhatsApp Video 2025-09-21 at 23.11.46_501e2eea.mp4" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
-                         <div class="p-6">
-                            <h3 class="text-xl font-bold text-white mb-2">Assignment</h3>
-                            <p class="text-[#bbbbbb]">Full-Stack web Development</p>
-                        </div>
-                    </div>
-                    <!-- Portfolio Item 4 -->
-                    <div class="section-background rounded-2xl overflow-hidden shadow-2xl transition-all duration-300 hover:scale-[1.02] flex-shrink-0 w-80">
-                        <img src="WhatsApp Image 2025-09-21 at 22.58.52_0cb6626e.jpg" alt="Project Chronos" class="w-full h-auto object-cover">
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold text-white mb-2">Project Vortex</h3>
-                            <p class="text-[#bbbbbb]"> Automated Train (auto braking system,camera system,Echo system with solar panels)</p>
-                        </div>
-                    </div>
-                    <!-- Portfolio Item 5 -->
-                    <div class="section-background rounded-2xl overflow-hidden shadow-2xl transition-all duration-300 hover:scale-[1.02] flex-shrink-0 w-80">
-                        <img src="WhatsApp Image 2025-09-21 at 23.11.47_a8b84b60.jpg" alt="Project Aether" class="w-full h-auto object-cover">
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold text-white mb-2">Assignment</h3>
-                            <p class="text-[#bbbbbb]">related in database management system.</p>
-                        </div>
-                    </div>
-                    <!-- Portfolio Item 6 -->
-                    <div class="section-background rounded-2xl overflow-hidden shadow-2xl transition-all duration-300 hover:scale-[1.02] flex-shrink-0 w-80">
-                        <img src="WhatsApp Image 2025-09-21 at 23.01.20_8dc17c95.jpg" alt="Project WSR" class="w-full h-auto object-cover">
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold text-white mb-2">Project WSR</h3>
-                            <p class="text-[#bbbbbb]">automated waste sorting robot.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Contact Section -->
-        <section id="contact" class="py-20 px-4 md:px-8">
-            <div class="container mx-auto max-w-2xl text-center section-background rounded-2xl p-10 md:p-16 shadow-2xl">
-                <h2 class="text-4xl md:text-5xl font-bold mb-8 text-white">Let's Connect</h2>
-                <p class="text-[#bbbbbb] mb-8">
-                    Ready to build something extraordinary? Send us a message and we'll get back to you promptly.
-                </p>
-                <div class="space-y-4 mb-8 text-lg text-[#f5f5f5]">
-                    <p class="flex items-center justify-center">
-                        <i class="fa-solid fa-envelope mr-3 text-[#b8954d]"></i>
-                        <a href="mailto:synthex6official@gmail.com" class="hover:text-[#b8954d] transition-colors duration-300">synthex6official@gmail.com</a>
+            <!-- About Section -->
+            <section id="about" class="py-20 px-4 md:px-8">
+                <div class="container mx-auto max-w-4xl text-center section-background rounded-2xl p-10 md:p-16 shadow-2xl">
+                    <h2 class="text-4xl md:text-5xl font-bold text-white mb-8 drop-shadow-md">Who We Are</h2>
+                    <p class="text-lg md:text-xl leading-relaxed text-[#bbbbbb]">
+                        Synthex6 is a dedicated team of engineers and creatives who solve complex academic and technical challenges. We specialize in developing robust **hardware and IoT solutions**, creating professional **documentation**, and producing high-quality **multimedia content**. We pride ourselves on flexible, quick, and budget-friendly services that help you succeed.
                     </p>
-                    <p class="flex items-center justify-center">
-                        <i class="fa-solid fa-phone mr-3 text-[#b8954d]"></i>
-                        <a href="tel:+94706575477" class="hover:text-[#b8954d] transition-colors duration-300">+94 70 657 5477</a>
-                    </p>
-                    <div class="flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-6">
-                        <a href="https://www.facebook.com/profile.php?id=61581334524183" target="_blank" class="text-[#bbbbbb] hover:text-white transition-colors duration-300 flex items-center justify-center">
-                            <i class="fab fa-facebook-f text-2xl mr-2"></i>
-                            <span>Synthex6</span>
-                        </a>
-                        <a href="https://www.instagram.com/synthex_6?igsh=NHN1amgxZmhwaWxt" target="_blank" class="text-[#bbbbbb] hover:text-white transition-colors duration-300 flex items-center justify-center">
-                            <i class="fab fa-instagram text-2xl mr-2"></i>
-                            <span>synthex_6</span>
-                        </a>
+                </div>
+            </section>
+
+            <!-- Services Section -->
+            <section id="services" class="py-20 px-4 md:px-8">
+                <div class="container mx-auto text-center">
+                    <h2 class="text-4xl md:text-5xl font-bold text-white mb-16 drop-shadow-md">Our Services</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                        <!-- Service Card 1: IoT & Hardware Solutions -->
+                        <div class="section-background rounded-2xl p-8 shadow-2xl transition-all duration-300 hover:scale-105 hover:border-[#b8954d]">
+                            <div class="text-5xl mb-4 text-[#b8954d]">⚙️</div>
+                            <h3 class="text-xl md:text-2xl font-bold mb-2 text-white">IoT & Hardware Solutions</h3>
+                            <p class="text-sm text-[#bbbbbb]">Stuck in wires and errors? We offer end-to-end development of your IoT or hardware project, ensuring it's fully functional and ready to showcase.</p>
+                        </div>
+                        <!-- Service Card 2: Creative Multimedia Works -->
+                        <div class="section-background rounded-2xl p-8 shadow-2xl transition-all duration-300 hover:scale-105 hover:border-[#b8954d]">
+                            <div class="text-5xl mb-4 text-[#b8954d]">🎬</div>
+                            <h3 class="text-xl md:text-2xl font-bold mb-2 text-white">Creative Multimedia Works</h3>
+                            <p class="text-sm text-[#bbbbbb]">From presentations and posters to graphics and animations, we handle all your multimedia needs, bringing your creative vision to life hassle-free.</p>
+                        </div>
+                        <!-- Service Card 3: Academic & Documentation Support -->
+                        <div class="section-background rounded-2xl p-8 shadow-2xl transition-all duration-300 hover:scale-105 hover:border-[#b8954d]">
+                            <div class="text-5xl mb-4 text-[#b8954d]">📝</div>
+                            <h3 class="text-xl md:text-2xl font-bold mb-2 text-white">Academic & Documentation Support</h3>
+                            <p class="text-sm text-[#bbbbbb]">Buried in deadlines? We handle your assignments, research papers, and professional CVs, ensuring quick delivery and high quality for all your academic needs.</p>
+                        </div>
                     </div>
                 </div>
-                <form id="contactForm" class="space-y-6">
-                    <input type="text" id="name" name="name" placeholder="Your Name" required class="w-full px-6 py-4 rounded-lg bg-[#1a1a1a] text-white border border-gray-700 focus:ring-2 focus:ring-[#b8954d] outline-none placeholder-gray-500">
-                    <input type="email" id="email" name="email" placeholder="Your Email" required class="w-full px-6 py-4 rounded-lg bg-[#1a1a1a] text-white border border-gray-700 focus:ring-2 focus:ring-[#b8954d] outline-none placeholder-gray-500">
-                    <textarea id="message" name="message" rows="5" placeholder="Your Message" required class="w-full px-6 py-4 rounded-lg bg-[#1a1a1a] text-white border border-gray-700 focus:ring-2 focus:ring-[#b8954d] outline-none placeholder-gray-500"></textarea>
-                    <button type="submit" class="w-full px-8 py-4 text-white font-bold rounded-full cta-button">
-                        Send Message
-                    </button>
-                    <div id="statusMessage" class="mt-4 text-center text-green-500" style="display: none;"></div>
-                </form>
+            </section>
+
+            <!-- Portfolio Section -->
+            <section id="portfolio" class="py-20 px-4 md:px-8">
+                <div class="container mx-auto text-center">
+                    <h2 class="text-4xl md:text-5xl font-bold text-white mb-16 drop-shadow-md">Our Portfolio</h2>
+                    <!-- New Flexbox container for horizontal scrolling -->
+                    <div id="portfolio-container" class="flex overflow-x-auto gap-10 pb-4">
+                        <!-- Portfolio Item 1 -->
+                        <div class="section-background rounded-2xl overflow-hidden shadow-2xl transition-all duration-300 hover:scale-105 flex-shrink-0 w-80">
+                            <img src="https://placehold.co/800x600/1e293b/d1d5db?text=Synthex+IoT+Solution" alt="Synthex IoT Solution" class="w-full h-auto object-cover">
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold text-white mb-2">Smart Home Automation</h3>
+                                <p class="text-[#bbbbbb]">An AI-powered IoT solution for seamless home control.</p>
+                            </div>
+                        </div>
+                        <!-- Portfolio Item 2 -->
+                        <div class="section-background rounded-2xl overflow-hidden shadow-2xl transition-all duration-300 hover:scale-105 flex-shrink-0 w-80">
+                            <img src="https://placehold.co/800x600/1e293b/d1d5db?text=Synthex+Doc+Project" alt="Synthex Documentation Project" class="w-full h-auto object-cover">
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold text-white mb-2">Technical Documentation Suite</h3>
+                                <p class="text-[#bbbbbb]">Comprehensive documentation for a new software API.</p>
+                            </div>
+                        </div>
+                        <!-- Portfolio Item 3 -->
+                        <div class="section-background rounded-2xl overflow-hidden shadow-2xl transition-all duration-300 hover:scale-105 flex-shrink-0 w-80">
+                            <img src="https://placehold.co/800x600/1e293b/d1d5db?text=Synthex+Creative+Work" alt="Synthex Creative Work" class="w-full h-auto object-cover">
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold text-white mb-2">Corporate Brand Video</h3>
+                                <p class="text-[#bbbbbb]">An animated video showcasing the company's core values.</p>
+                            </div>
+                        </div>
+                        <!-- Portfolio Item 4 -->
+                        <div class="section-background rounded-2xl overflow-hidden shadow-2xl transition-all duration-300 hover:scale-105 flex-shrink-0 w-80">
+                            <img src="https://placehold.co/800x600/1e293b/d1d5db?text=Synthex+Academic+Project" alt="Synthex Academic Project" class="w-full h-auto object-cover">
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold text-white mb-2">Robotics Research Paper</h3>
+                                <p class="text-[#bbbbbb]">Detailed academic paper on advanced robotics algorithms.</p>
+                            </div>
+                        </div>
+                        <!-- Portfolio Item 5 -->
+                        <div class="section-background rounded-2xl overflow-hidden shadow-2xl transition-all duration-300 hover:scale-105 flex-shrink-0 w-80">
+                            <img src="https://placehold.co/800x600/1e293b/d1d5db?text=Synthex+IoT+Dashboard" alt="Synthex IoT Dashboard" class="w-full h-auto object-cover">
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold text-white mb-2">IoT Data Dashboard</h3>
+                                <p class="text-[#bbbbbb]">A real-time data visualization dashboard for industrial sensors.</p>
+                            </div>
+                        </div>
+                        <!-- Portfolio Item 6 -->
+                        <div class="section-background rounded-2xl overflow-hidden shadow-2xl transition-all duration-300 hover:scale-105 flex-shrink-0 w-80">
+                            <img src="https://placehold.co/800x600/1e293b/d1d5db?text=Synthex+Digital+Art" alt="Synthex Digital Art" class="w-full h-auto object-cover">
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold text-white mb-2">Digital Art & Assets</h3>
+                                <p class="text-[#bbbbbb]">Creative assets for a new indie video game.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contact Section -->
+            <section id="contact" class="py-20 px-4 md:px-8">
+                <div class="container mx-auto max-w-2xl text-center section-background rounded-2xl p-10 md:p-16 shadow-2xl">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-8 text-white drop-shadow-md">Let's Connect</h2>
+                    <p class="text-[#bbbbbb] mb-8">
+                        Ready to build something extraordinary? Send us a message and we'll get back to you promptly.
+                    </p>
+                    <div class="space-y-4 mb-8 text-lg text-[#e5e5e5]">
+                        <p class="flex items-center justify-center">
+                            <i class="fa-solid fa-envelope mr-3 text-[#b8954d]"></i>
+                            <a href="mailto:synthex6official@gmail.com" class="hover:text-[#b8954d] transition-colors duration-300">synthex6official@gmail.com</a>
+                        </p>
+                        <p class="flex items-center justify-center">
+                            <i class="fa-solid fa-phone mr-3 text-[#b8954d]"></i>
+                            <a href="tel:+94706575477" class="hover:text-[#b8954d] transition-colors duration-300">+94 70 657 5477</a>
+                        </p>
+                        <div class="flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-6">
+                            <a href="https://www.facebook.com/profile.php?id=61581334524183" target="_blank" class="text-[#bbbbbb] hover:text-white transition-colors duration-300 flex items-center justify-center">
+                                <i class="fab fa-facebook-f text-2xl mr-2"></i>
+                                <span>Synthex6</span>
+                            </a>
+                            <a href="https://www.instagram.com/synthex_6?igsh=NHN1amgxZmhwaWxt" target="_blank" class="text-[#bbbbbb] hover:text-white transition-colors duration-300 flex items-center justify-center">
+                                <i class="fab fa-instagram text-2xl mr-2"></i>
+                                <span>synthex_6</span>
+                            </a>
+                        </div>
+                    </div>
+                    <form id="contactForm" class="space-y-6">
+                        <input type="text" id="name" name="name" placeholder="Your Name" required class="w-full px-6 py-4 rounded-lg bg-[#141414] text-white border border-gray-700 focus:ring-2 focus:ring-[#b8954d] outline-none placeholder-gray-500">
+                        <input type="email" id="email" name="email" placeholder="Your Email" required class="w-full px-6 py-4 rounded-lg bg-[#141414] text-white border border-gray-700 focus:ring-2 focus:ring-[#b8954d] outline-none placeholder-gray-500">
+                        <textarea id="message" name="message" rows="5" placeholder="Your Message" required class="w-full px-6 py-4 rounded-lg bg-[#141414] text-white border border-gray-700 focus:ring-2 focus:ring-[#b8954d] outline-none placeholder-gray-500"></textarea>
+                        <button type="submit" class="w-full px-8 py-4 text-white font-bold rounded-full cta-button">
+                            Send Message
+                        </button>
+                        <div id="statusMessage" class="mt-4 text-center text-green-500" style="display: none;"></div>
+                    </form>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="py-10 px-4 text-center border-t border-gray-800">
+            <div class="container mx-auto text-gray-500">
+                <p>&copy; 2024 Synthex6. All Rights Reserved.</p>
+                <p class="mt-2 text-[#bbbbbb]">Forcus on your goals💡 We handle the weight 🏆 Hustle hard, heres the support🚀</p>
             </div>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="py-10 px-4 text-center border-t border-gray-800">
-        <div class="container mx-auto text-gray-500">
-            <p>&copy; 2024 Synthex6. All Rights Reserved.</p>
-            <p class="mt-2">Focus on your goals💡 We handle the weight 🏆 Hustle hard, here's the support🚀</p>
-        </div>
-    </footer>
-
+        </footer>
+    </div>
+    
     <script>
         // Use a simple, modern approach for interactivity
         document.addEventListener('DOMContentLoaded', () => {
             // Smooth scrolling for navigation links
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
+                anchor.addEventListener('click', function(e) {
                     e.preventDefault();
                     document.querySelector(this.getAttribute('href')).scrollIntoView({
                         behavior: 'smooth'
@@ -290,13 +351,17 @@
         });
 
         // THREE.js setup for floating particles and the explosion effect
-        window.onload = function () {
+        window.onload = function() {
             // Scene setup
             const scene = new THREE.Scene();
             const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
             camera.position.z = 10;
 
-            const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('three-canvas'), antialias: true, alpha: true });
+            const renderer = new THREE.WebGLRenderer({
+                canvas: document.getElementById('three-canvas'),
+                antialias: true,
+                alpha: true
+            });
             renderer.setPixelRatio(window.devicePixelRatio);
             renderer.setSize(window.innerWidth, window.innerHeight);
 
@@ -333,29 +398,35 @@
             scene.add(particles);
 
             let hasExploded = false;
+            let targetCameraZ = 10; // Initial camera Z position
 
             // Handle scroll event for the explosion
             window.addEventListener('scroll', () => {
                 if (window.scrollY > 50 && !hasExploded) {
                     hasExploded = true;
+                    targetCameraZ = 20; // Zoom out to this Z position after explosion
                     // Trigger the explosion effect
                     for (let i = 0; i < particleCount; i++) {
                         // Give each particle a random velocity vector pointing away from the center
                         const direction = new THREE.Vector3(positions[i * 3], positions[i * 3 + 1], positions[i * 3 + 2]).normalize();
-                        const speed = Math.random() * 0.1 + 0.05;
+                        const speed = Math.random() * 0.05 + 0.02; // Slower speed for better visibility
                         velocities[i * 3] = direction.x * speed;
                         velocities[i * 3 + 1] = direction.y * speed;
                         velocities[i * 3 + 2] = direction.z * speed;
                     }
+                    material.size = 0.3; // Make particles larger after explosion
                 }
             });
 
             // Animation loop
-            const animate = function () {
+            const animate = function() {
                 requestAnimationFrame(animate);
 
                 // Update particle positions based on velocity
                 if (hasExploded) {
+                    // Smoothly move the camera back to "zoom out"
+                    camera.position.z += (targetCameraZ - camera.position.z) * 0.02;
+
                     const positions = particles.geometry.attributes.position.array;
                     for (let i = 0; i < particleCount; i++) {
                         positions[i * 3] += velocities[i * 3];
@@ -383,14 +454,27 @@
             document.addEventListener('mousemove', (e) => {
                 const mouseX = (e.clientX / window.innerWidth) * 2 - 1;
                 const mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
-                
+
                 // Smoothly adjust camera position
                 camera.position.x += (mouseX * 2 - camera.position.x) * 0.05;
                 camera.position.y += (mouseY * 2 - camera.position.y) * 0.05;
                 camera.lookAt(scene.position);
             });
+            
+            // Initial animation to show particles and content after load
+            const loaderContainer = document.getElementById('loader-container');
+            const mainContent = document.getElementById('main-content');
+            
+            setTimeout(() => {
+                loaderContainer.classList.add('loader-hidden');
+            }, 2000); // 2-second simulated loading time
 
-            animate();
+            loaderContainer.addEventListener('transitionend', () => {
+                mainContent.classList.add('visible');
+                animate(); // Start the 3D animation after the loader is hidden
+            }, {
+                once: true
+            });
         };
 
         // Automatic horizontal scrolling for portfolio
@@ -404,7 +488,7 @@
                 originalItems.forEach(item => {
                     portfolioContainer.appendChild(item.cloneNode(true));
                 });
-                
+
                 let currentScroll = 0;
                 let itemWidth = 0;
 
@@ -434,7 +518,7 @@
                         });
                     }
                 };
-                
+
                 setInterval(autoScroll, scrollInterval);
             }
         });
