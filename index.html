@@ -24,6 +24,11 @@
             /* Prevent horizontal scroll */
         }
 
+        /* NEW: Class to disable vertical scrolling */
+        body.no-scroll {
+            overflow-y: hidden;
+        }
+
         /* Loading screen container */
         #loader-container {
             position: fixed;
@@ -182,7 +187,7 @@
                 <div class="container mx-auto max-w-4xl text-center section-background rounded-2xl p-10 md:p-16 shadow-2xl">
                     <h2 class="text-4xl md:text-5xl font-bold text-white mb-8 drop-shadow-md">Who We Are</h2>
                     <p class="text-lg md:text-xl leading-relaxed text-[#bbbbbb]">
-                        Synthex6 is a dedicated team of engineers and creatives who solve complex academic and technical challenges. We specialize in developing robust **hardware and IoT solutions**, creating professional **documentation**, and producing high-quality **multimedia content**. We pride ourselves on flexible, quick, and budget-friendly services that help you succeed.
+                        Synthex6 is a dedicated team of postgraduates, undergraduates and creatives who solve complex academic and technical challenges. We specialize in developing robust **hardware and IoT solutions**, creating professional **documentation**, and producing high-quality **multimedia content**. We pride ourselves on flexible, quick, and budget-friendly services that help you succeed.
                     </p>
                 </div>
             </section>
@@ -191,24 +196,30 @@
             <section id="services" class="py-20 px-4 md:px-8">
                 <div class="container mx-auto text-center">
                     <h2 class="text-4xl md:text-5xl font-bold text-white mb-16 drop-shadow-md">Our Services</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                        <!-- Service Card 1: IoT & Hardware Solutions -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+                        <!-- Service Card 1: Academic Support -->
+                        <div class="section-background rounded-2xl p-8 shadow-2xl transition-all duration-300 hover:scale-105 hover:border-[#b8954d]">
+                            <div class="text-5xl mb-4 text-[#b8954d]">📚</div>
+                            <h3 class="text-xl md:text-2xl font-bold mb-2 text-white">Academic Support & Documentation</h3>
+                            <p class="text-sm text-[#bbbbbb]">We handle all your assignments, tutorials, and documentation needs, including research papers and professional CVs.</p>
+                        </div>
+                        <!-- Service Card 2: Creative Multimedia -->
+                        <div class="section-background rounded-2xl p-8 shadow-2xl transition-all duration-300 hover:scale-105 hover:border-[#b8954d]">
+                            <div class="text-5xl mb-4 text-[#b8954d]">🎨</div>
+                            <h3 class="text-xl md:text-2xl font-bold mb-2 text-white">Creative Multimedia & Design</h3>
+                            <p class="text-sm text-[#bbbbbb]">We create stunning presentations, graphics, animations, and other multimedia works to bring your ideas to life.</p>
+                        </div>
+                        <!-- Service Card 3: IoT & Hardware -->
                         <div class="section-background rounded-2xl p-8 shadow-2xl transition-all duration-300 hover:scale-105 hover:border-[#b8954d]">
                             <div class="text-5xl mb-4 text-[#b8954d]">⚙️</div>
                             <h3 class="text-xl md:text-2xl font-bold mb-2 text-white">IoT & Hardware Solutions</h3>
-                            <p class="text-sm text-[#bbbbbb]">Stuck in wires and errors? We offer end-to-end development of your IoT or hardware project, ensuring it's fully functional and ready to showcase.</p>
+                            <p class="text-sm text-[#bbbbbb]">Our team develops and designs complete, ready-to-showcase IoT and hardware projects from the ground up.</p>
                         </div>
-                        <!-- Service Card 2: Creative Multimedia Works -->
+                        <!-- Service Card 4: Viva Preparation -->
                         <div class="section-background rounded-2xl p-8 shadow-2xl transition-all duration-300 hover:scale-105 hover:border-[#b8954d]">
-                            <div class="text-5xl mb-4 text-[#b8954d]">🎬</div>
-                            <h3 class="text-xl md:text-2xl font-bold mb-2 text-white">Creative Multimedia Works</h3>
-                            <p class="text-sm text-[#bbbbbb]">From presentations and posters to graphics and animations, we handle all your multimedia needs, bringing your creative vision to life hassle-free.</p>
-                        </div>
-                        <!-- Service Card 3: Academic & Documentation Support -->
-                        <div class="section-background rounded-2xl p-8 shadow-2xl transition-all duration-300 hover:scale-105 hover:border-[#b8954d]">
-                            <div class="text-5xl mb-4 text-[#b8954d]">📝</div>
-                            <h3 class="text-xl md:text-2xl font-bold mb-2 text-white">Academic & Documentation Support</h3>
-                            <p class="text-sm text-[#bbbbbb]">Buried in deadlines? We handle your assignments, research papers, and professional CVs, ensuring quick delivery and high quality for all your academic needs.</p>
+                            <div class="text-5xl mb-4 text-[#b8954d]">🗣️</div>
+                            <h3 class="text-xl md:text-2xl font-bold mb-2 text-white">Viva Preparation</h3>
+                            <p class="text-sm text-[#bbbbbb]">We don't just build your project—we also provide coaching and real-scenario practice to make you ready for your viva.</p>
                         </div>
                     </div>
                 </div>
@@ -221,51 +232,62 @@
                     <!-- New Flexbox container for horizontal scrolling -->
                     <div id="portfolio-container" class="flex overflow-x-auto gap-10 pb-4">
                         <!-- Portfolio Item 1 -->
-                        <div class="section-background rounded-2xl overflow-hidden shadow-2xl transition-all duration-300 hover:scale-105 flex-shrink-0 w-80">
-                            <img src="https://placehold.co/800x600/1e293b/d1d5db?text=Synthex+IoT+Solution" alt="Synthex IoT Solution" class="w-full h-auto object-cover">
+                        <div class="section-background rounded-2xl overflow-hidden shadow-2xl transition-all duration-300 hover:scale-[1.02] flex-shrink-0 w-80">
+                            <img src="WhatsApp Image 2025-09-21 at 22.59.57_3ebb354b.jpg" alt="Project Atlas" class="w-full h-auto object-cover">
                             <div class="p-6">
-                                <h3 class="text-xl font-bold text-white mb-2">Smart Home Automation</h3>
-                                <p class="text-[#bbbbbb]">An AI-powered IoT solution for seamless home control.</p>
+                                <h3 class="text-xl font-bold text-white mb-2">Project Hygiene</h3>
+                                <p class="text-[#bbbbbb]">Healthcare monitoring and medicine dispensing unit.</p>
                             </div>
                         </div>
                         <!-- Portfolio Item 2 -->
-                        <div class="section-background rounded-2xl overflow-hidden shadow-2xl transition-all duration-300 hover:scale-105 flex-shrink-0 w-80">
-                            <img src="https://placehold.co/800x600/1e293b/d1d5db?text=Synthex+Doc+Project" alt="Synthex Documentation Project" class="w-full h-auto object-cover">
+                        <div class="section-background rounded-2xl overflow-hidden shadow-2xl transition-all duration-300 hover:scale-[1.02] flex-shrink-0 w-80">
+                            <img src="WhatsApp Image 2025-09-21 at 23.03.22_c780c4af.jpg" alt="Project Evolve" class="w-full h-auto object-cover">
                             <div class="p-6">
-                                <h3 class="text-xl font-bold text-white mb-2">Technical Documentation Suite</h3>
-                                <p class="text-[#bbbbbb]">Comprehensive documentation for a new software API.</p>
+                                <h3 class="text-xl font-bold text-white mb-2">Project Tusker</h3>
+                                <p class="text-[#bbbbbb]">AN automated warehouse management system.</p>
                             </div>
                         </div>
                         <!-- Portfolio Item 3 -->
-                        <div class="section-background rounded-2xl overflow-hidden shadow-2xl transition-all duration-300 hover:scale-105 flex-shrink-0 w-80">
-                            <img src="https://placehold.co/800x600/1e293b/d1d5db?text=Synthex+Creative+Work" alt="Synthex Creative Work" class="w-full h-auto object-cover">
+                        <div class="section-background rounded-2xl overflow-hidden shadow-2xl transition-all duration-300 hover:scale-[1.02] flex-shrink-0 w-80">
+                            <video autoplay muted loop playsinline style="width:100%; height:auto; object-fit:cover;">
+                                <source src="WhatsApp Video 2025-09-21 at 23.11.46_501e2eea.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
                             <div class="p-6">
-                                <h3 class="text-xl font-bold text-white mb-2">Corporate Brand Video</h3>
-                                <p class="text-[#bbbbbb]">An animated video showcasing the company's core values.</p>
+                                <h3 class="text-xl font-bold text-white mb-2">Assignment</h3>
+                                <p class="text-[#bbbbbb]">Full-Stack web Development</p>
                             </div>
                         </div>
                         <!-- Portfolio Item 4 -->
-                        <div class="section-background rounded-2xl overflow-hidden shadow-2xl transition-all duration-300 hover:scale-105 flex-shrink-0 w-80">
-                            <img src="https://placehold.co/800x600/1e293b/d1d5db?text=Synthex+Academic+Project" alt="Synthex Academic Project" class="w-full h-auto object-cover">
+                        <div class="section-background rounded-2xl overflow-hidden shadow-2xl transition-all duration-300 hover:scale-[1.02] flex-shrink-0 w-80">
+                            <img src="WhatsApp Image 2025-09-21 at 22.58.52_0cb6626e.jpg" alt="Project Chronos" class="w-full h-auto object-cover">
                             <div class="p-6">
-                                <h3 class="text-xl font-bold text-white mb-2">Robotics Research Paper</h3>
-                                <p class="text-[#bbbbbb]">Detailed academic paper on advanced robotics algorithms.</p>
+                                <h3 class="text-xl font-bold text-white mb-2">Project Vortex</h3>
+                                <p class="text-[#bbbbbb]"> Automated Train (auto braking system,camera system,Echo system with solar panels)</p>
                             </div>
                         </div>
                         <!-- Portfolio Item 5 -->
-                        <div class="section-background rounded-2xl overflow-hidden shadow-2xl transition-all duration-300 hover:scale-105 flex-shrink-0 w-80">
-                            <img src="https://placehold.co/800x600/1e293b/d1d5db?text=Synthex+IoT+Dashboard" alt="Synthex IoT Dashboard" class="w-full h-auto object-cover">
+                        <div class="section-background rounded-2xl overflow-hidden shadow-2xl transition-all duration-300 hover:scale-[1.02] flex-shrink-0 w-80">
+                            <img src="WhatsApp Image 2025-09-21 at 23.11.47_a8b84b60.jpg" alt="Project Aether" class="w-full h-auto object-cover">
                             <div class="p-6">
-                                <h3 class="text-xl font-bold text-white mb-2">IoT Data Dashboard</h3>
-                                <p class="text-[#bbbbbb]">A real-time data visualization dashboard for industrial sensors.</p>
+                                <h3 class="text-xl font-bold text-white mb-2">Assignment</h3>
+                                <p class="text-[#bbbbbb]">related in database management system.</p>
                             </div>
                         </div>
                         <!-- Portfolio Item 6 -->
-                        <div class="section-background rounded-2xl overflow-hidden shadow-2xl transition-all duration-300 hover:scale-105 flex-shrink-0 w-80">
-                            <img src="https://placehold.co/800x600/1e293b/d1d5db?text=Synthex+Digital+Art" alt="Synthex Digital Art" class="w-full h-auto object-cover">
+                        <div class="section-background rounded-2xl overflow-hidden shadow-2xl transition-all duration-300 hover:scale-[1.02] flex-shrink-0 w-80">
+                            <img src="WhatsApp Image 2025-09-21 at 23.01.20_8dc17c95.jpg" alt="Project WSR" class="w-full h-auto object-cover">
                             <div class="p-6">
-                                <h3 class="text-xl font-bold text-white mb-2">Digital Art & Assets</h3>
-                                <p class="text-[#bbbbbb]">Creative assets for a new indie video game.</p>
+                                <h3 class="text-xl font-bold text-white mb-2">Project WSR</h3>
+                                <p class="text-[#bbbbbb]">automated waste sorting robot.</p>
+                            </div>
+                        </div>
+                        <!-- Portfolio Item 7 -->
+                        <div class="section-background rounded-2xl overflow-hidden shadow-2xl transition-all duration-300 hover:scale-[1.02] flex-shrink-0 w-80">
+                            <img src="Screenshot 2025-09-21 231822.png" alt="Project Aether" class="w-full h-auto object-cover">
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold text-white mb-2">Assignment</h3>
+                                <p class="text-[#bbbbbb]">Networking(packet tracer).</p>
                             </div>
                         </div>
                     </div>
@@ -316,11 +338,11 @@
         <footer class="py-10 px-4 text-center border-t border-gray-800">
             <div class="container mx-auto text-gray-500">
                 <p>&copy; 2024 Synthex6. All Rights Reserved.</p>
-                <p class="mt-2 text-[#bbbbbb]">Forcus on your goals💡 We handle the weight 🏆 Hustle hard, heres the support🚀</p>
+                <p>Forcus on your goals💡 We handle the weight 🏆 Hustle hard, heres the support🚀</p>
             </div>
         </footer>
     </div>
-    
+
     <script>
         // Use a simple, modern approach for interactivity
         document.addEventListener('DOMContentLoaded', () => {
@@ -352,6 +374,9 @@
 
         // THREE.js setup for floating particles and the explosion effect
         window.onload = function() {
+            // NEW: Disable body scrolling during loading
+            document.body.classList.add('no-scroll');
+
             // Scene setup
             const scene = new THREE.Scene();
             const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -402,7 +427,7 @@
 
             // Handle scroll event for the explosion
             window.addEventListener('scroll', () => {
-                if (window.scrollY > 50 && !hasExploded) {
+                if (window.scrollY > 300 && !hasExploded) {
                     hasExploded = true;
                     targetCameraZ = 20; // Zoom out to this Z position after explosion
                     // Trigger the explosion effect
@@ -460,17 +485,19 @@
                 camera.position.y += (mouseY * 2 - camera.position.y) * 0.05;
                 camera.lookAt(scene.position);
             });
-            
+
             // Initial animation to show particles and content after load
             const loaderContainer = document.getElementById('loader-container');
             const mainContent = document.getElementById('main-content');
-            
+
             setTimeout(() => {
                 loaderContainer.classList.add('loader-hidden');
             }, 2000); // 2-second simulated loading time
 
             loaderContainer.addEventListener('transitionend', () => {
                 mainContent.classList.add('visible');
+                // NEW: Re-enable scrolling after the loader has faded out
+                document.body.classList.remove('no-scroll');
                 animate(); // Start the 3D animation after the loader is hidden
             }, {
                 once: true
@@ -526,3 +553,4 @@
 </body>
 
 </html>
+
