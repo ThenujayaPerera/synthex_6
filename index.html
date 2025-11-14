@@ -134,6 +134,82 @@
             color: #0a0a0a;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
+        /* =============  MOBILE (phones)  ============= */
+@media (max-width: 600px) {
+
+    body {
+        padding: 0;
+        margin: 0;
+    }
+
+    .navbar {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+
+    .navbar a {
+        font-size: 14px;
+        padding: 8px 10px;
+    }
+
+    h1, h2, h3 {
+        font-size: 20px !important;
+        text-align: center;
+    }
+
+    p {
+        font-size: 14px;
+        line-height: 1.5;
+        text-align: center;
+    }
+
+    img, video {
+        width: 100% !important;
+        height: auto !important;
+    }
+
+    .section {
+        padding: 10px;
+        width: 100%;
+    }
+
+    .btn {
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+    }
+}
+
+/* =============  TABLET (600–900px)  ============= */
+@media (min-width: 600px) and (max-width: 900px) {
+    
+    .navbar a {
+        font-size: 16px;
+        padding: 10px 14px;
+    }
+
+    img, video {
+        width: 90% !important;
+        margin: 0 auto;
+    }
+
+    h1, h2, h3 {
+        font-size: 26px !important;
+    }
+
+    .section {
+        padding: 20px;
+    }
+}
+
+/* =============  LARGE DEVICES  ============= */
+@media (min-width: 900px) {
+    img, video {
+        max-width: 700px;
+    }
+}
+
     </style>
 </head>
 
@@ -553,4 +629,5 @@
 </body>
 
 </html>
+
 
