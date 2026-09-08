@@ -24,9 +24,9 @@
             /* Prevent horizontal scroll */
         }
 
-        /* NEW: Class to disable vertical scrolling */
+        /* NEW: Class to disable all scrolling and hide scrollbar */
         body.no-scroll {
-            overflow-y: hidden;
+            overflow: hidden;
         }
 
         /* Loading screen container */
@@ -123,17 +123,7 @@
             /* Firefox */
         }
 
-        /* Custom hover effect for nav links */
-        .nav-link {
-            transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, transform 0.3s ease-in-out;
-        }
-
-        .nav-link:hover {
-            transform: scale(1.1);
-            background-color: #ffffff;
-            color: #0a0a0a;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
+        /* Custom hover effect for nav links removed for Tailwind approach */
         /* =============  MOBILE (phones)  ============= */
 @media (max-width: 600px) {
 
@@ -210,10 +200,62 @@
     }
 }
 
+        /* Scroll Reveal Animation */
+        html { scroll-behavior: smooth; }
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Scrolling Ticker Animation */
+        .ticker-wrap {
+            width: 100%;
+            overflow: hidden;
+            background-color: #b8954d;
+            padding: 12px 0;
+            position: relative;
+            z-index: 20;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 0 20px rgba(184,149,77,0.3);
+            transform: rotate(-1deg) scale(1.02);
+            margin: 4rem 0;
+        }
+
+        .ticker {
+            display: inline-flex;
+            white-space: nowrap;
+            animation: ticker 25s linear infinite;
+        }
+
+        .ticker-item {
+            padding: 0 2rem;
+            font-size: 1.25rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #000;
+            display: flex;
+            align-items: center;
+        }
+
+        .ticker-separator {
+            color: #fff;
+            margin: 0 1rem;
+        }
+
+        @keyframes ticker {
+            0% { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(-50%, 0, 0); }
+        }
     </style>
 </head>
 
-<body class="bg-[#0a0a0a] text-[#e5e5e5]">
+<body class="bg-[#0a0a0a] text-[#e5e5e5] no-scroll">
 
     <!-- Loading Screen -->
     <div id="loader-container">
@@ -227,73 +269,145 @@
 
     <!-- Main Content -->
     <div id="main-content">
-        <!-- Navigation Bar -->
-        <nav class="fixed top-0 left-0 w-full z-50 bg-[#0a0a0a] shadow-lg p-4 transition-all duration-300">
-            <div class="container mx-auto flex justify-between items-center">
-                <a href="#home" class="transition duration-300">
-                    <div class="text-xl md:text-2xl font-bold">
-                        <span class="text-[#b8954d]">SYNTH</span><span class="text-[#e5e5e5]">E</span><span class="text-[#b8954d]">X6</span>
-                    </div>
-                </a>
-                <div class="flex items-center space-x-2 md:space-x-4 rounded-full p-1">
-                    <a href="#about" class="nav-link px-3 py-1 md:px-4 md:py-2 rounded-full text-sm md:text-base text-white">About</a>
-                    <a href="#services" class="nav-link px-3 py-1 md:px-4 md:py-2 rounded-full text-sm md:text-base text-white">Services</a>
-                    <a href="#portfolio" class="nav-link px-3 py-1 md:px-4 md:py-2 rounded-full text-sm md:text-base text-white">Portfolio</a>
-                    <a href="#contact" class="nav-link px-3 py-1 md:px-4 md:py-2 rounded-full text-sm md:text-base text-white">Contact</a>
+        <!-- Header / Navbar -->
+    <header class="fixed w-[95%] max-w-6xl top-4 md:top-6 left-1/2 -translate-x-1/2 z-50 bg-[#0d0d0d]/70 backdrop-blur-xl border border-white/10 rounded-full transition-all duration-500 shadow-[0_8px_30px_rgb(0,0,0,0.6)]">
+        <div class="px-6 py-3 md:px-8 md:py-4 flex justify-between items-center">
+            <!-- Logo area -->
+            <a href="#home" class="transition duration-300 hover:opacity-80">
+                <div class="text-2xl md:text-3xl font-bold tracking-wider">
+                    <span class="text-[#b8954d]">SYNTH</span><span class="text-[#e5e5e5]">E</span><span class="text-[#b8954d]">X6</span>
                 </div>
+            </a>
+            
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex space-x-8 items-center bg-black/40 px-8 py-2 rounded-full border border-white/5 shadow-inner">
+                <a href="#about" class="text-sm font-medium tracking-wider text-[#bbbbbb] hover:text-white transition-colors duration-300 relative group py-1">
+                    ABOUT
+                    <span class="absolute -bottom-1 left-1/2 w-1 h-1 rounded-full bg-[#b8954d] opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:w-full group-hover:left-0 group-hover:h-[2px] group-hover:rounded-none"></span>
+                </a>
+                <a href="#services" class="text-sm font-medium tracking-wider text-[#bbbbbb] hover:text-white transition-colors duration-300 relative group py-1">
+                    SERVICES
+                    <span class="absolute -bottom-1 left-1/2 w-1 h-1 rounded-full bg-[#b8954d] opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:w-full group-hover:left-0 group-hover:h-[2px] group-hover:rounded-none"></span>
+                </a>
+                <a href="#portfolio" class="text-sm font-medium tracking-wider text-[#bbbbbb] hover:text-white transition-colors duration-300 relative group py-1">
+                    PROJECTS
+                    <span class="absolute -bottom-1 left-1/2 w-1 h-1 rounded-full bg-[#b8954d] opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:w-full group-hover:left-0 group-hover:h-[2px] group-hover:rounded-none"></span>
+                </a>
+                <a href="#contact" class="text-sm font-medium tracking-wider text-[#bbbbbb] hover:text-white transition-colors duration-300 relative group py-1">
+                    CONTACT
+                    <span class="absolute -bottom-1 left-1/2 w-1 h-1 rounded-full bg-[#b8954d] opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:w-full group-hover:left-0 group-hover:h-[2px] group-hover:rounded-none"></span>
+                </a>
+            </nav>
+
+
+
+            <!-- Mobile Menu Button (Hamburger) -->
+            <div class="md:hidden flex items-center">
+                <button class="text-white hover:text-[#b8954d] transition-colors outline-none focus:outline-none bg-white/5 p-2 rounded-full border border-white/10 active:scale-95">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
             </div>
-        </nav>
+        </div>
+    </header>
 
         <main class="relative z-10">
             <!-- Hero Section -->
-            <section id="home" class="flex flex-col items-center justify-center min-h-screen text-center p-8">
-                <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold leading-tight text-white drop-shadow-md">
-                    The Future of Digital Excellence
+            <section id="home" class="flex flex-col items-center justify-center min-h-screen text-center px-4 md:px-8 pt-20 relative z-10 pointer-events-none reveal">
+                <!-- Badge -->
+                <div class="mb-8 px-5 py-2 rounded-full border border-[#b8954d]/30 bg-[#b8954d]/10 backdrop-blur-sm inline-block">
+                    <span class="text-[#b8954d] text-xs md:text-sm font-bold tracking-[0.2em] uppercase">Innovation Meets Precision</span>
+                </div>
+                
+                <h1 class="text-5xl md:text-7xl lg:text-8xl font-extrabold leading-tight text-white drop-shadow-2xl max-w-5xl">
+                    Engineering the <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#b8954d] via-[#e5c07b] to-[#b8954d]">Future</span> of Technology
                 </h1>
-                <p class="mt-4 text-xl md:text-2xl lg:text-3xl font-light max-w-4xl text-[#bbbbbb]">
-                    Crafting immersive digital solutions with cutting-edge technology and human-centric design.
+                
+                <p class="mt-8 text-lg md:text-xl lg:text-2xl font-light max-w-3xl text-[#cccccc] leading-relaxed drop-shadow-md">
+                    From cutting-edge IoT & robotics to premium academic documentation. We transform complex challenges into elegant, ready-to-deploy solutions.
                 </p>
-                <a href="#contact" class="mt-12 px-8 py-4 text-white font-bold rounded-full cta-button">
-                    Get in Touch
-                </a>
+                
+                <div class="mt-12 flex flex-col sm:flex-row gap-6 pointer-events-auto">
+                    <a href="#portfolio" class="px-8 py-4 bg-gradient-to-r from-[#b8954d] to-[#967639] text-white font-bold tracking-widest rounded-full hover:scale-105 hover:shadow-[0_0_25px_rgba(184,149,77,0.6)] transition-all duration-300 border border-[#d4b068]/50">
+                        EXPLORE WORK
+                    </a>
+                    <a href="#contact" class="px-8 py-4 bg-transparent text-white font-bold tracking-widest rounded-full hover:bg-white/10 transition-all duration-300 border border-white/30 hover:border-white backdrop-blur-sm">
+                        WORK WITH US
+                    </a>
+                </div>
             </section>
 
+            <!-- Moving Text Belt (Ticker) -->
+            <div class="ticker-wrap reveal">
+                <div class="ticker">
+                    <!-- Original set -->
+                    <div class="ticker-item">IoT & Hardware Solutions<span class="ticker-separator">✦</span></div>
+                    <div class="ticker-item">Creative Multimedia<span class="ticker-separator">✦</span></div>
+                    <div class="ticker-item">Academic Support<span class="ticker-separator">✦</span></div>
+                    <div class="ticker-item">Professional Documentation<span class="ticker-separator">✦</span></div>
+                    <div class="ticker-item">Web Development<span class="ticker-separator">✦</span></div>
+                    <div class="ticker-item">Viva Preparation<span class="ticker-separator">✦</span></div>
+                    <!-- Duplicated set for seamless looping -->
+                    <div class="ticker-item">IoT & Hardware Solutions<span class="ticker-separator">✦</span></div>
+                    <div class="ticker-item">Creative Multimedia<span class="ticker-separator">✦</span></div>
+                    <div class="ticker-item">Academic Support<span class="ticker-separator">✦</span></div>
+                    <div class="ticker-item">Professional Documentation<span class="ticker-separator">✦</span></div>
+                    <div class="ticker-item">Web Development<span class="ticker-separator">✦</span></div>
+                    <div class="ticker-item">Viva Preparation<span class="ticker-separator">✦</span></div>
+                </div>
+            </div>
+
             <!-- About Section -->
-            <section id="about" class="py-20 px-4 md:px-8">
-                <div class="container mx-auto max-w-4xl text-center section-background rounded-2xl p-10 md:p-16 shadow-2xl">
-                    <h2 class="text-4xl md:text-5xl font-bold text-white mb-8 drop-shadow-md">Who We Are</h2>
-                    <p class="text-lg md:text-xl leading-relaxed text-[#bbbbbb]">
-                        Synthex6 is a dedicated team of postgraduates, undergraduates and creatives who solve complex academic and technical challenges. We specialize in developing robust **hardware and IoT solutions**, creating professional **documentation**, and producing high-quality **multimedia content**. We pride ourselves on flexible, quick, and budget-friendly services that help you succeed.
-                    </p>
+            <section id="about" class="py-24 px-4 md:px-8 relative z-10 reveal">
+                <div class="container mx-auto max-w-6xl">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center bg-[#0d0d0d]/80 backdrop-blur-md rounded-3xl p-8 lg:p-12 border border-white/10 shadow-2xl">
+                        <!-- Image Left Side -->
+                        <div class="relative rounded-2xl overflow-hidden shadow-2xl border border-white/5 group h-full">
+                            <div class="absolute inset-0 bg-[#b8954d]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10"></div>
+                            <img src="who-we-are.jpg" alt="Who We Are Team" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700">
+                        </div>
+                        
+                        <!-- Text Right Side -->
+                        <div class="text-left flex flex-col justify-center">
+                            <div class="mb-8 inline-block">
+                                <h2 class="text-4xl md:text-5xl font-bold text-white mb-4 tracking-tight drop-shadow-lg">Who We Are</h2>
+                                <div class="h-1 w-20 bg-[#b8954d] rounded-full"></div>
+                            </div>
+                            <p class="text-lg md:text-xl leading-relaxed text-[#bbbbbb]">
+                                <span class="text-[#e5e5e5] font-semibold">Synthex6</span> is a dedicated team of postgraduates, undergraduates and creatives who solve complex academic and technical challenges. We specialize in developing robust <strong class="text-[#e5e5e5] font-semibold">hardware and IoT solutions</strong>, creating professional <strong class="text-[#e5e5e5] font-semibold">documentation</strong>, and producing high-quality <strong class="text-[#e5e5e5] font-semibold">multimedia content</strong>. We pride ourselves on flexible, quick, and budget-friendly services that help you succeed.
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </section>
 
             <!-- Services Section -->
-            <section id="services" class="py-20 px-4 md:px-8">
+            <section id="services" class="py-20 px-4 md:px-8 reveal">
                 <div class="container mx-auto text-center">
                     <h2 class="text-4xl md:text-5xl font-bold text-white mb-16 drop-shadow-md">Our Services</h2>
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
                         <!-- Service Card 1: Academic Support -->
                         <div class="section-background rounded-2xl p-8 shadow-2xl transition-all duration-300 hover:scale-105 hover:border-[#b8954d]">
-                            <div class="text-5xl mb-4 text-[#b8954d]">📚</div>
+                            <img src="academic_support_icon_1788876498358.jpg" alt="Academic Support" class="w-24 h-24 mx-auto mb-6 object-cover rounded-full border-2 border-[#b8954d] shadow-lg shadow-[#b8954d]/20">
                             <h3 class="text-xl md:text-2xl font-bold mb-2 text-white">Academic Support & Documentation</h3>
                             <p class="text-sm text-[#bbbbbb]">We handle all your assignments, tutorials, and documentation needs, including research papers and professional CVs.</p>
                         </div>
                         <!-- Service Card 2: Creative Multimedia -->
                         <div class="section-background rounded-2xl p-8 shadow-2xl transition-all duration-300 hover:scale-105 hover:border-[#b8954d]">
-                            <div class="text-5xl mb-4 text-[#b8954d]">🎨</div>
+                            <img src="multimedia_icon_1788876542373.jpg" alt="Creative Multimedia" class="w-24 h-24 mx-auto mb-6 object-cover rounded-full border-2 border-[#b8954d] shadow-lg shadow-[#b8954d]/20">
                             <h3 class="text-xl md:text-2xl font-bold mb-2 text-white">Creative Multimedia & Design</h3>
                             <p class="text-sm text-[#bbbbbb]">We create stunning presentations, graphics, animations, and other multimedia works to bring your ideas to life.</p>
                         </div>
                         <!-- Service Card 3: IoT & Hardware -->
                         <div class="section-background rounded-2xl p-8 shadow-2xl transition-all duration-300 hover:scale-105 hover:border-[#b8954d]">
-                            <div class="text-5xl mb-4 text-[#b8954d]">⚙️</div>
+                            <img src="hardware_icon_1788876596087.jpg" alt="IoT & Hardware" class="w-24 h-24 mx-auto mb-6 object-cover rounded-full border-2 border-[#b8954d] shadow-lg shadow-[#b8954d]/20">
                             <h3 class="text-xl md:text-2xl font-bold mb-2 text-white">IoT & Hardware Solutions</h3>
                             <p class="text-sm text-[#bbbbbb]">Our team develops and designs complete, ready-to-showcase IoT and hardware projects from the ground up.</p>
                         </div>
                         <!-- Service Card 4: Viva Preparation -->
                         <div class="section-background rounded-2xl p-8 shadow-2xl transition-all duration-300 hover:scale-105 hover:border-[#b8954d]">
-                            <div class="text-5xl mb-4 text-[#b8954d]">🗣️</div>
+                            <div class="w-24 h-24 mx-auto mb-6 rounded-full border-2 border-[#b8954d] shadow-lg shadow-[#b8954d]/20 bg-[#111111] flex items-center justify-center">
+                                <i class="fa-solid fa-microphone text-4xl text-[#b8954d]"></i>
+                            </div>
                             <h3 class="text-xl md:text-2xl font-bold mb-2 text-white">Viva Preparation</h3>
                             <p class="text-sm text-[#bbbbbb]">We don't just build your project—we also provide coaching and real-scenario practice to make you ready for your viva.</p>
                         </div>
@@ -302,68 +416,148 @@
             </section>
 
             <!-- Portfolio Section -->
-            <section id="portfolio" class="py-20 px-4 md:px-8">
-                <div class="container mx-auto text-center">
-                    <h2 class="text-4xl md:text-5xl font-bold text-white mb-16 drop-shadow-md">Our Portfolio</h2>
+            <section id="portfolio" class="py-24 px-4 md:px-8 relative reveal">
+                <div class="container mx-auto text-center max-w-7xl">
+                    <div class="mb-16 inline-block">
+                        <h2 class="text-4xl md:text-5xl font-bold text-white mb-4 tracking-tight drop-shadow-lg">Our Portfolio</h2>
+                        <div class="h-1 w-24 bg-[#b8954d] mx-auto rounded-full"></div>
+                    </div>
                     <!-- New Flexbox container for horizontal scrolling -->
-                    <div id="portfolio-container" class="flex overflow-x-auto gap-10 pb-4">
+                    <div id="portfolio-container" class="flex overflow-x-auto gap-8 pb-8 snap-x snap-mandatory">
                         <!-- Portfolio Item 1 -->
-                        <div class="section-background rounded-2xl overflow-hidden shadow-2xl transition-all duration-300 hover:scale-[1.02] flex-shrink-0 w-80">
-                            <img src="WhatsApp Image 2025-09-21 at 22.59.57_3ebb354b.jpg" alt="Project Atlas" class="w-full h-auto object-cover">
-                            <div class="p-6">
-                                <h3 class="text-xl font-bold text-white mb-2">Project Hygiene</h3>
-                                <p class="text-[#bbbbbb]">Healthcare monitoring and medicine dispensing unit.</p>
+                        <div class="group relative rounded-3xl overflow-hidden shadow-2xl transition-all duration-500 hover:-translate-y-2 flex-shrink-0 w-[340px] snap-center bg-[#111111] border border-white/5">
+                            <div class="relative h-[240px] w-full overflow-hidden">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent z-10 transition-opacity duration-300"></div>
+                                <img src="WhatsApp Image 2025-09-21 at 22.59.57_3ebb354b.jpg" alt="Project Hygiene" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                            </div>
+                            <div class="relative z-20 p-8 -mt-12 text-left">
+                                <h3 class="text-2xl font-bold text-white mb-2 tracking-wide">Project Hygiene</h3>
+                                <p class="text-[#aaaaaa] text-sm leading-relaxed">Healthcare monitoring and medicine dispensing unit.</p>
                             </div>
                         </div>
                         <!-- Portfolio Item 2 -->
-                        <div class="section-background rounded-2xl overflow-hidden shadow-2xl transition-all duration-300 hover:scale-[1.02] flex-shrink-0 w-80">
-                            <img src="WhatsApp Image 2025-09-21 at 23.03.22_c780c4af.jpg" alt="Project Evolve" class="w-full h-auto object-cover">
-                            <div class="p-6">
-                                <h3 class="text-xl font-bold text-white mb-2">Project Tusker</h3>
-                                <p class="text-[#bbbbbb]">AN automated warehouse management system.</p>
+                        <div class="group relative rounded-3xl overflow-hidden shadow-2xl transition-all duration-500 hover:-translate-y-2 flex-shrink-0 w-[340px] snap-center bg-[#111111] border border-white/5">
+                            <div class="relative h-[240px] w-full overflow-hidden">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent z-10 transition-opacity duration-300"></div>
+                                <img src="WhatsApp Image 2025-09-21 at 23.03.22_c780c4af.jpg" alt="Project Tusker" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                            </div>
+                            <div class="relative z-20 p-8 -mt-12 text-left">
+                                <h3 class="text-2xl font-bold text-white mb-2 tracking-wide">Project Tusker</h3>
+                                <p class="text-[#aaaaaa] text-sm leading-relaxed">An automated warehouse management system.</p>
                             </div>
                         </div>
                         <!-- Portfolio Item 3 -->
-                        <div class="section-background rounded-2xl overflow-hidden shadow-2xl transition-all duration-300 hover:scale-[1.02] flex-shrink-0 w-80">
-                            <video autoplay muted loop playsinline style="width:100%; height:auto; object-fit:cover;">
-                                <source src="WhatsApp Video 2025-09-21 at 23.11.46_501e2eea.mp4" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                            <div class="p-6">
-                                <h3 class="text-xl font-bold text-white mb-2">Assignment</h3>
-                                <p class="text-[#bbbbbb]">Full-Stack web Development</p>
+                        <div class="group relative rounded-3xl overflow-hidden shadow-2xl transition-all duration-500 hover:-translate-y-2 flex-shrink-0 w-[340px] snap-center bg-[#111111] border border-white/5">
+                            <div class="relative h-[240px] w-full overflow-hidden bg-black">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent z-10 transition-opacity duration-300"></div>
+                                <video autoplay muted loop playsinline class="w-full h-full object-cover opacity-80 transition-transform duration-700 group-hover:scale-110">
+                                    <source src="WhatsApp Video 2025-09-21 at 23.11.46_501e2eea.mp4" type="video/mp4">
+                                </video>
+                            </div>
+                            <div class="relative z-20 p-8 -mt-12 text-left">
+                                <h3 class="text-2xl font-bold text-white mb-2 tracking-wide">Assignment</h3>
+                                <p class="text-[#aaaaaa] text-sm leading-relaxed">Full-Stack Web Development</p>
                             </div>
                         </div>
                         <!-- Portfolio Item 4 -->
-                        <div class="section-background rounded-2xl overflow-hidden shadow-2xl transition-all duration-300 hover:scale-[1.02] flex-shrink-0 w-80">
-                            <img src="WhatsApp Image 2025-09-21 at 22.58.52_0cb6626e.jpg" alt="Project Chronos" class="w-full h-auto object-cover">
-                            <div class="p-6">
-                                <h3 class="text-xl font-bold text-white mb-2">Project Vortex</h3>
-                                <p class="text-[#bbbbbb]"> Automated Train (auto braking system,camera system,Echo system with solar panels)</p>
+                        <div class="group relative rounded-3xl overflow-hidden shadow-2xl transition-all duration-500 hover:-translate-y-2 flex-shrink-0 w-[340px] snap-center bg-[#111111] border border-white/5">
+                            <div class="relative h-[240px] w-full overflow-hidden">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent z-10 transition-opacity duration-300"></div>
+                                <img src="WhatsApp Image 2025-09-21 at 22.58.52_0cb6626e.jpg" alt="Project Vortex" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                            </div>
+                            <div class="relative z-20 p-8 -mt-12 text-left">
+                                <h3 class="text-2xl font-bold text-white mb-2 tracking-wide">Project Vortex</h3>
+                                <p class="text-[#aaaaaa] text-sm leading-relaxed">Automated Train (auto braking system, camera system, solar panels)</p>
                             </div>
                         </div>
                         <!-- Portfolio Item 5 -->
-                        <div class="section-background rounded-2xl overflow-hidden shadow-2xl transition-all duration-300 hover:scale-[1.02] flex-shrink-0 w-80">
-                            <img src="WhatsApp Image 2025-09-21 at 23.11.47_a8b84b60.jpg" alt="Project Aether" class="w-full h-auto object-cover">
-                            <div class="p-6">
-                                <h3 class="text-xl font-bold text-white mb-2">Assignment</h3>
-                                <p class="text-[#bbbbbb]">related in database management system.</p>
+                        <div class="group relative rounded-3xl overflow-hidden shadow-2xl transition-all duration-500 hover:-translate-y-2 flex-shrink-0 w-[340px] snap-center bg-[#111111] border border-white/5">
+                            <div class="relative h-[240px] w-full overflow-hidden">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent z-10 transition-opacity duration-300"></div>
+                                <img src="WhatsApp Image 2025-09-21 at 23.11.47_a8b84b60.jpg" alt="Assignment DB" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                            </div>
+                            <div class="relative z-20 p-8 -mt-12 text-left">
+                                <h3 class="text-2xl font-bold text-white mb-2 tracking-wide">Assignment</h3>
+                                <p class="text-[#aaaaaa] text-sm leading-relaxed">Database management system integration.</p>
                             </div>
                         </div>
                         <!-- Portfolio Item 6 -->
-                        <div class="section-background rounded-2xl overflow-hidden shadow-2xl transition-all duration-300 hover:scale-[1.02] flex-shrink-0 w-80">
-                            <img src="WhatsApp Image 2025-09-21 at 23.01.20_8dc17c95.jpg" alt="Project WSR" class="w-full h-auto object-cover">
-                            <div class="p-6">
-                                <h3 class="text-xl font-bold text-white mb-2">Project WSR</h3>
-                                <p class="text-[#bbbbbb]">automated waste sorting robot.</p>
+                        <div class="group relative rounded-3xl overflow-hidden shadow-2xl transition-all duration-500 hover:-translate-y-2 flex-shrink-0 w-[340px] snap-center bg-[#111111] border border-white/5">
+                            <div class="relative h-[240px] w-full overflow-hidden">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent z-10 transition-opacity duration-300"></div>
+                                <img src="WhatsApp Image 2025-09-21 at 23.01.20_8dc17c95.jpg" alt="Project WSR" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                            </div>
+                            <div class="relative z-20 p-8 -mt-12 text-left">
+                                <h3 class="text-2xl font-bold text-white mb-2 tracking-wide">Project WSR</h3>
+                                <p class="text-[#aaaaaa] text-sm leading-relaxed">Automated waste sorting robot.</p>
                             </div>
                         </div>
                         <!-- Portfolio Item 7 -->
-                        <div class="section-background rounded-2xl overflow-hidden shadow-2xl transition-all duration-300 hover:scale-[1.02] flex-shrink-0 w-80">
-                            <img src="Screenshot 2025-09-21 231822.png" alt="Project Aether" class="w-full h-auto object-cover">
-                            <div class="p-6">
-                                <h3 class="text-xl font-bold text-white mb-2">Assignment</h3>
-                                <p class="text-[#bbbbbb]">Networking(packet tracer).</p>
+                        <div class="group relative rounded-3xl overflow-hidden shadow-2xl transition-all duration-500 hover:-translate-y-2 flex-shrink-0 w-[340px] snap-center bg-[#111111] border border-white/5">
+                            <div class="relative h-[240px] w-full overflow-hidden">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent z-10 transition-opacity duration-300"></div>
+                                <img src="Screenshot 2025-09-21 231822.png" alt="Networking" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                            </div>
+                            <div class="relative z-20 p-8 -mt-12 text-left">
+                                <h3 class="text-2xl font-bold text-white mb-2 tracking-wide">Assignment</h3>
+                                <p class="text-[#aaaaaa] text-sm leading-relaxed">Networking (packet tracer).</p>
+                            </div>
+                        </div>
+                        <!-- Portfolio Item 8: Micromouse -->
+                        <div class="group relative rounded-3xl overflow-hidden shadow-2xl transition-all duration-500 hover:-translate-y-2 flex-shrink-0 w-[340px] snap-center bg-[#111111] border border-white/5">
+                            <div class="relative h-[240px] w-full overflow-hidden bg-gradient-to-br from-[#1a1a1a] to-[#0a0a0a] flex items-center justify-center">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent z-10 transition-opacity duration-300"></div>
+                                <img src="micrmouserobot.jpeg" alt="Micromouse" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 relative z-0">
+                            </div>
+                            <div class="relative z-20 p-8 -mt-12 text-left">
+                                <h3 class="text-2xl font-bold text-white mb-2 tracking-wide">Micromouse</h3>
+                                <p class="text-[#aaaaaa] text-sm leading-relaxed">Autonomous maze-solving robot navigation.</p>
+                            </div>
+                        </div>
+                        <!-- Portfolio Item 9: Line Following -->
+                        <div class="group relative rounded-3xl overflow-hidden shadow-2xl transition-all duration-500 hover:-translate-y-2 flex-shrink-0 w-[340px] snap-center bg-[#111111] border border-white/5">
+                            <div class="relative h-[240px] w-full overflow-hidden bg-gradient-to-br from-[#1a1a1a] to-[#0a0a0a] flex items-center justify-center">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent z-10 transition-opacity duration-300"></div>
+                                <img src="linefollowing and objectpicking competition winner robot.jpeg" alt="Line Following" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 relative z-0">
+                            </div>
+                            <div class="relative z-20 p-8 -mt-12 text-left">
+                                <h3 class="text-2xl font-bold text-white mb-2 tracking-wide">Line Following</h3>
+                                <p class="text-[#aaaaaa] text-sm leading-relaxed">Precision autonomous line following robot.</p>
+                            </div>
+                        </div>
+                        <!-- Portfolio Item 10: Servemate -->
+                        <div class="group relative rounded-3xl overflow-hidden shadow-2xl transition-all duration-500 hover:-translate-y-2 flex-shrink-0 w-[340px] snap-center bg-[#111111] border border-white/5">
+                            <div class="relative h-[240px] w-full overflow-hidden bg-black flex items-center justify-center">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent z-10 transition-opacity duration-300"></div>
+                                <video autoplay muted loop playsinline class="w-full h-full object-cover opacity-80 transition-transform duration-700 group-hover:scale-110 relative z-0">
+                                    <source src="servemate competion winner hotel companient and management system.mp4" type="video/mp4">
+                                </video>
+                            </div>
+                            <div class="relative z-20 p-8 -mt-12 text-left">
+                                <h3 class="text-2xl font-bold text-white mb-2 tracking-wide">Servemate</h3>
+                                <p class="text-[#aaaaaa] text-sm leading-relaxed">Automated robotic service assistant.</p>
+                            </div>
+                        </div>
+                        <!-- Portfolio Item 12: Hotel Management -->
+                        <div class="group relative rounded-3xl overflow-hidden shadow-2xl transition-all duration-500 hover:-translate-y-2 flex-shrink-0 w-[340px] snap-center bg-[#111111] border border-white/5">
+                            <div class="relative h-[240px] w-full overflow-hidden bg-gradient-to-br from-[#1a1a1a] to-[#0a0a0a] flex items-center justify-center">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent z-10 transition-opacity duration-300"></div>
+                                <img src="hotel management.jpg" alt="Hotel Management System" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 relative z-0">
+                            </div>
+                            <div class="relative z-20 p-8 -mt-12 text-left">
+                                <h3 class="text-2xl font-bold text-white mb-2 tracking-wide">Hotel Management</h3>
+                                <p class="text-[#aaaaaa] text-sm leading-relaxed">Comprehensive hotel booking and management system.</p>
+                            </div>
+                        </div>
+                        <!-- Portfolio Item 13: Mobile Accessories Shop -->
+                        <div class="group relative rounded-3xl overflow-hidden shadow-2xl transition-all duration-500 hover:-translate-y-2 flex-shrink-0 w-[340px] snap-center bg-[#111111] border border-white/5">
+                            <div class="relative h-[240px] w-full overflow-hidden bg-gradient-to-br from-[#1a1a1a] to-[#0a0a0a] flex items-center justify-center">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent z-10 transition-opacity duration-300"></div>
+                                <img src="mobile.jpg" alt="Accessories Shop" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 relative z-0">
+                            </div>
+                            <div class="relative z-20 p-8 -mt-12 text-left">
+                                <h3 class="text-2xl font-bold text-white mb-2 tracking-wide">Accessories Shop</h3>
+                                <p class="text-[#aaaaaa] text-sm leading-relaxed">E-commerce platform for mobile accessories.</p>
                             </div>
                         </div>
                     </div>
@@ -371,50 +565,125 @@
             </section>
 
             <!-- Contact Section -->
-            <section id="contact" class="py-20 px-4 md:px-8">
-                <div class="container mx-auto max-w-2xl text-center section-background rounded-2xl p-10 md:p-16 shadow-2xl">
-                    <h2 class="text-4xl md:text-5xl font-bold mb-8 text-white drop-shadow-md">Let's Connect</h2>
-                    <p class="text-[#bbbbbb] mb-8">
-                        Ready to build something extraordinary? Send us a message and we'll get back to you promptly.
-                    </p>
-                    <div class="space-y-4 mb-8 text-lg text-[#e5e5e5]">
-                        <p class="flex items-center justify-center">
-                            <i class="fa-solid fa-envelope mr-3 text-[#b8954d]"></i>
-                            <a href="mailto:synthex6official@gmail.com" class="hover:text-[#b8954d] transition-colors duration-300">synthex6official@gmail.com</a>
-                        </p>
-                        <p class="flex items-center justify-center">
-                            <i class="fa-solid fa-phone mr-3 text-[#b8954d]"></i>
-                            <a href="tel:+94706575477" class="hover:text-[#b8954d] transition-colors duration-300">+94 70 657 5477</a>
-                        </p>
-                        <div class="flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-6">
-                            <a href="https://www.facebook.com/profile.php?id=61581334524183" target="_blank" class="text-[#bbbbbb] hover:text-white transition-colors duration-300 flex items-center justify-center">
-                                <i class="fab fa-facebook-f text-2xl mr-2"></i>
-                                <span>Synthex6</span>
-                            </a>
-                            <a href="https://www.instagram.com/synthex_6?igsh=NHN1amgxZmhwaWxt" target="_blank" class="text-[#bbbbbb] hover:text-white transition-colors duration-300 flex items-center justify-center">
-                                <i class="fab fa-instagram text-2xl mr-2"></i>
-                                <span>synthex_6</span>
-                            </a>
+            <section id="contact" class="py-24 px-4 md:px-8 relative z-10 reveal">
+                <div class="container mx-auto max-w-6xl">
+                    <div class="text-center mb-16 inline-block w-full">
+                        <h2 class="text-4xl md:text-5xl font-bold text-white mb-4 tracking-tight drop-shadow-lg">Let's Connect</h2>
+                        <div class="h-1 w-24 bg-[#b8954d] mx-auto rounded-full"></div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 bg-[#0a0a0a]/80 backdrop-blur-md rounded-3xl p-8 lg:p-12 border border-white/10 shadow-2xl">
+                        <!-- Contact Info -->
+                        <div class="flex flex-col justify-center space-y-8">
+                            <div>
+                                <h3 class="text-3xl font-bold text-white mb-4">Ready to build something extraordinary?</h3>
+                                <p class="text-[#aaaaaa] text-lg leading-relaxed">Send us a message and our team will get back to you promptly to discuss your ideas and requirements.</p>
+                            </div>
+                            
+                            <div class="space-y-6">
+                                <div class="flex items-center">
+                                    <div class="w-12 h-12 bg-[#141414] rounded-full flex items-center justify-center mr-4 border border-[#b8954d]/30">
+                                        <i class="fa-solid fa-envelope text-[#b8954d] text-xl"></i>
+                                    </div>
+                                    <a href="mailto:synthex6official@gmail.com" class="text-lg text-white hover:text-[#b8954d] transition-colors duration-300">synthex6official@gmail.com</a>
+                                </div>
+                                <div class="flex items-center">
+                                    <div class="w-12 h-12 bg-[#141414] rounded-full flex items-center justify-center mr-4 border border-[#b8954d]/30">
+                                        <i class="fa-solid fa-phone text-[#b8954d] text-xl"></i>
+                                    </div>
+                                    <a href="tel:+94706575477" class="text-lg text-white hover:text-[#b8954d] transition-colors duration-300">+94 70 657 5477</a>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <p class="text-[#888888] text-sm uppercase tracking-widest mb-4 font-semibold">Follow Us</p>
+                                <div class="flex space-x-4">
+                                    <a href="https://www.facebook.com/profile.php?id=61581334524183" target="_blank" class="w-12 h-12 bg-[#141414] rounded-full flex items-center justify-center text-[#aaaaaa] hover:bg-[#b8954d] hover:text-white transition-all duration-300 border border-white/10">
+                                        <i class="fab fa-facebook-f text-xl"></i>
+                                    </a>
+                                    <a href="https://www.instagram.com/synthex_6?igsh=NHN1amgxZmhwaWxt" target="_blank" class="w-12 h-12 bg-[#141414] rounded-full flex items-center justify-center text-[#aaaaaa] hover:bg-[#b8954d] hover:text-white transition-all duration-300 border border-white/10">
+                                        <i class="fab fa-instagram text-xl"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Contact Form -->
+                        <div class="bg-[#111111] rounded-2xl p-8 border border-white/5 shadow-inner">
+                            <form id="contactForm" class="space-y-6">
+                                <div class="space-y-2">
+                                    <label for="name" class="text-sm text-[#888888] ml-1 font-medium">Full Name</label>
+                                    <input type="text" id="name" name="name" placeholder="John Doe" required class="w-full px-5 py-4 rounded-xl bg-[#050505] text-white border border-[#222222] focus:border-[#b8954d] focus:ring-1 focus:ring-[#b8954d] outline-none placeholder-[#444] transition-all duration-300">
+                                </div>
+                                <div class="space-y-2">
+                                    <label for="email" class="text-sm text-[#888888] ml-1 font-medium">Email Address</label>
+                                    <input type="email" id="email" name="email" placeholder="john@example.com" required class="w-full px-5 py-4 rounded-xl bg-[#050505] text-white border border-[#222222] focus:border-[#b8954d] focus:ring-1 focus:ring-[#b8954d] outline-none placeholder-[#444] transition-all duration-300">
+                                </div>
+                                <div class="space-y-2">
+                                    <label for="message" class="text-sm text-[#888888] ml-1 font-medium">Your Message</label>
+                                    <textarea id="message" name="message" rows="4" placeholder="How can we help you?" required class="w-full px-5 py-4 rounded-xl bg-[#050505] text-white border border-[#222222] focus:border-[#b8954d] focus:ring-1 focus:ring-[#b8954d] outline-none placeholder-[#444] transition-all duration-300 resize-none"></textarea>
+                                </div>
+                                <button type="submit" class="w-full px-8 py-4 text-white font-bold rounded-xl cta-button tracking-wide text-lg mt-4 flex items-center justify-center">
+                                    <span>Send Message</span>
+                                    <i class="fa-solid fa-paper-plane ml-3"></i>
+                                </button>
+                                <div id="statusMessage" class="mt-4 text-center font-medium" style="display: none;"></div>
+                            </form>
                         </div>
                     </div>
-                    <form id="contactForm" class="space-y-6">
-                        <input type="text" id="name" name="name" placeholder="Your Name" required class="w-full px-6 py-4 rounded-lg bg-[#141414] text-white border border-gray-700 focus:ring-2 focus:ring-[#b8954d] outline-none placeholder-gray-500">
-                        <input type="email" id="email" name="email" placeholder="Your Email" required class="w-full px-6 py-4 rounded-lg bg-[#141414] text-white border border-gray-700 focus:ring-2 focus:ring-[#b8954d] outline-none placeholder-gray-500">
-                        <textarea id="message" name="message" rows="5" placeholder="Your Message" required class="w-full px-6 py-4 rounded-lg bg-[#141414] text-white border border-gray-700 focus:ring-2 focus:ring-[#b8954d] outline-none placeholder-gray-500"></textarea>
-                        <button type="submit" class="w-full px-8 py-4 text-white font-bold rounded-full cta-button">
-                            Send Message
-                        </button>
-                        <div id="statusMessage" class="mt-4 text-center text-green-500" style="display: none;"></div>
-                    </form>
                 </div>
             </section>
         </main>
 
         <!-- Footer -->
-        <footer class="py-10 px-4 text-center border-t border-gray-800">
-            <div class="container mx-auto text-gray-500">
-                <p>&copy; 2024 Synthex6. All Rights Reserved.</p>
-                <p>Forcus on your goals💡 We handle the weight 🏆 Hustle hard, heres the support🚀</p>
+        <footer class="relative z-10 pt-16 pb-8 px-4 bg-[#050505] border-t border-white/5">
+            <div class="container mx-auto max-w-6xl">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12 border-b border-white/10 pb-12">
+                    <!-- Brand Column -->
+                    <div class="flex flex-col items-center md:items-start text-center md:text-left">
+                        <a href="#home" class="mb-4 transition duration-300 hover:opacity-80">
+                            <div class="text-3xl font-bold tracking-wider">
+                                <span class="text-[#b8954d]">SYNTH</span><span class="text-[#e5e5e5]">E</span><span class="text-[#b8954d]">X6</span>
+                            </div>
+                        </a>
+                        <p class="text-[#888888] text-sm leading-relaxed max-w-xs mt-2">
+                            Crafting immersive digital solutions with cutting-edge technology and human-centric design.
+                        </p>
+                    </div>
+                    
+                    <!-- Quick Links Column -->
+                    <div class="flex flex-col items-center md:items-start">
+                        <h4 class="text-white font-bold text-lg mb-6 tracking-wide">Quick Links</h4>
+                        <div class="flex flex-col space-y-3">
+                            <a href="#about" class="text-[#888888] hover:text-[#b8954d] transition-colors duration-300 text-sm">About Us</a>
+                            <a href="#services" class="text-[#888888] hover:text-[#b8954d] transition-colors duration-300 text-sm">Our Services</a>
+                            <a href="#portfolio" class="text-[#888888] hover:text-[#b8954d] transition-colors duration-300 text-sm">Portfolio</a>
+                            <a href="#contact" class="text-[#888888] hover:text-[#b8954d] transition-colors duration-300 text-sm">Contact Us</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Philosophy Column -->
+                    <div class="flex flex-col items-center md:items-start text-center md:text-left">
+                        <h4 class="text-white font-bold text-lg mb-6 tracking-wide">Our Philosophy</h4>
+                        <div class="text-[#888888] text-sm italic mb-6 leading-relaxed flex flex-col space-y-2">
+                            <span>"Focus on your goals <i class="fa-solid fa-lightbulb text-[#b8954d] ml-1"></i></span>
+                            <span>We handle the weight <i class="fa-solid fa-trophy text-[#b8954d] ml-1"></i></span>
+                            <span>Hustle hard, here's the support <i class="fa-solid fa-rocket text-[#b8954d] ml-1"></i>"</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex flex-col md:flex-row justify-between items-center text-xs text-[#666666]">
+                    <p>&copy; 2024 Synthex6. All Rights Reserved.</p>
+                    <div class="mt-4 md:mt-0 space-x-6 flex items-center">
+                        <a href="https://www.facebook.com/profile.php?id=61581334524183" target="_blank" class="hover:text-white transition-colors duration-300">
+                            <i class="fab fa-facebook-f text-sm"></i>
+                        </a>
+                        <a href="https://www.instagram.com/synthex_6?igsh=NHN1amgxZmhwaWxt" target="_blank" class="hover:text-white transition-colors duration-300">
+                            <i class="fab fa-instagram text-sm"></i>
+                        </a>
+                    </div>
+                </div>
             </div>
         </footer>
     </div>
@@ -450,8 +719,7 @@
 
         // THREE.js setup for floating particles and the explosion effect
         window.onload = function() {
-            // NEW: Disable body scrolling during loading
-            document.body.classList.add('no-scroll');
+            // Note: Body already has 'no-scroll' class applied in the HTML to prevent scrollbar during initial load.
 
             // Scene setup
             const scene = new THREE.Scene();
@@ -624,6 +892,28 @@
 
                 setInterval(autoScroll, scrollInterval);
             }
+        });
+        // Scroll Reveal Logic
+        document.addEventListener('DOMContentLoaded', function() {
+            const reveals = document.querySelectorAll('.reveal');
+            
+            const revealOptions = {
+                threshold: 0.1,
+                rootMargin: "0px 0px -50px 0px"
+            };
+
+            const revealOnScroll = new IntersectionObserver(function(entries, observer) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target); // Stop observing once revealed
+                    }
+                });
+            }, revealOptions);
+
+            reveals.forEach(reveal => {
+                revealOnScroll.observe(reveal);
+            });
         });
     </script>
 </body>
